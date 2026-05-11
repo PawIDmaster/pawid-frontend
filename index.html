@@ -240,6 +240,60 @@ function saveAdmin() {
 }
 
 async function triggerScanAlert() {
+  const phone = (demoData.phone || '3001234567').replace(/\s/g, '').replace(/\D/g, '');
+  const owner = demoData.owner || 'Dueño Demo';
+  const petName = demoData.petName || 'Luna';
+
+  // Intentar obtener ubicación GPS del browser
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        // Convertir coordenadas a dirección
+        const lat = pos.coords.latitude;
+        const lon = pos.coords.longitude;
+        let cityText = `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
+        try {
+          const geo = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&accept-language=es`
+          ).then(r => r.json());
+          const a = geo.address;
+          cityText = [
+            a.road || a.pedestrian || a.neighbourhood,
+            a.suburb || a.city_district,
+            a.city || a.town || a.village,
+            a.state
+          ].filter(Boolean).join(', ');
+        } catch(_) {}
+
+        await sendAlert(phone, owner, petName, cityText);
+      },
+      async () => {
+        // Si rechaza el permiso, usar IP
+        await sendAlert(phone, owner, petName, await getCityByIP());
+      },
+      { timeout: 5000 }
+    );
+  } else {
+    await sendAlert(phone, owner, petName, await getCityByIP());
+  }
+}
+
+async function getCityByIP() {
+  try {
+    const r = await fetch('https://ipapi.co/json/').then(r => r.json());
+    return [r.city, r.region].filter(Boolean).join(', ') || 'Colombia';
+  } catch(_) { return 'Colombia'; }
+}
+
+async function sendAlert(phone, owner, petName, city) {
+  try {
+    await fetch(API_URL + '/demo-alert', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ phone, owner, petName, city })
+    });
+  } catch(e) {}
+}
   const phone = (demoData.phone || '+573001234567').replace(/\s/g, '').replace(/\D/g, '');
   const owner = demoData.owner || 'Carlos Rodríguez';
   const petName = demoData.petName || 'Luna';
