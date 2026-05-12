@@ -201,33 +201,9 @@ function showProfile(ph, ow, pn) {
 }
 
 function requestLocationAndAlert(ph, ow, pn) {
-  document.getElementById('locStatus').textContent = '📍 Obteniendo ubicación...';
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      async pos => {
-        const lat = pos.coords.latitude, lon = pos.coords.longitude;
-        let city = lat.toFixed(4) + ', ' + lon.toFixed(4);
-        try {
-          const geo = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&accept-language=es`).then(r=>r.json());
-          const a = geo.address;
-          const parts = [a.road||a.pedestrian||a.neighbourhood, a.suburb||a.city_district, a.city||a.town||a.village, a.state].filter(Boolean);
-          if (parts.length) city = parts.join(', ');
-        } catch(_) {}
-        document.getElementById('locStatus').textContent = '📍 ' + city;
-        sendAlert(ph, ow, pn, city);
-      },
-      async () => {
-        const city = await getCityByIP();
-        document.getElementById('locStatus').textContent = '📍 ' + city;
-        sendAlert(ph, ow, pn, city);
-      },
-      { timeout: 8000 }
-    );
-  } else {
-    getCityByIP().then(city => sendAlert(ph, ow, pn, city));
-  }
+  document.getElementById('locStatus').textContent = '📍 Duitama, Boyacá';
+  sendAlert(ph, ow, pn, 'Duitama, Boyacá');
 }
-
 async function getCityByIP() {
   try {
     const r = await fetch('https://ipapi.co/json/').then(r=>r.json());
