@@ -231,8 +231,15 @@ function requestLocationAndAlert(ph, ow, pn) {
 async function getCityByIP() {
   try {
     const r = await fetch('https://ipapi.co/json/').then(r=>r.json());
-    return [r.city, r.region].filter(Boolean).join(', ') || 'Colombia';
-  } catch(_) { return 'Colombia'; }
+    const city = [r.city, r.region].filter(Boolean).join(', ');
+    if (city && city.length > 3) return city;
+  } catch(_) {}
+  try {
+    const r = await fetch('https://ip-api.com/json/?fields=city,regionName&lang=es').then(r=>r.json());
+    const city = [r.city, r.regionName].filter(Boolean).join(', ');
+    if (city && city.length > 3) return city;
+  } catch(_) {}
+  return 'Duitama, Boyacá';
 }
 
 async function sendAlert(ph, ow, pn, city) {
