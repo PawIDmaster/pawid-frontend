@@ -382,20 +382,21 @@ function requestLocationAndAlert(ph, ow, pn) {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       async pos => {
-        const lat = pos.coords.latitude, lon = pos.coords.longitude;
+        const lat = pos.coords.latitude;
+        const lon = pos.coords.longitude;
         const mapsLink = `https://maps.google.com/?q=${lat},${lon}`;
         document.getElementById('locStatus').textContent = '📍 Ubicación obtenida';
-        sendAlert(ph, ow, pn, `Duitama, Boyacá\n🗺 ${mapsLink}`);
+        sendAlert(ph, ow, pn, `Ubicación en tiempo real\n🗺 ${mapsLink}`);
       },
       () => {
-        const mapsLink = 'https://maps.google.com/?q=Duitama,Boyaca,Colombia';
+        const mapsLink = 'https://maps.google.com/?q=5.8271,-73.0278';
         document.getElementById('locStatus').textContent = '📍 Duitama, Boyacá';
         sendAlert(ph, ow, pn, `Duitama, Boyacá\n🗺 ${mapsLink}`);
       },
       { timeout: 8000, enableHighAccuracy: true }
     );
   } else {
-    const mapsLink = 'https://maps.google.com/?q=Duitama,Boyaca,Colombia';
+    const mapsLink = 'https://maps.google.com/?q=5.8271,-73.0278';
     sendAlert(ph, ow, pn, `Duitama, Boyacá\n🗺 ${mapsLink}`);
   }
 }
