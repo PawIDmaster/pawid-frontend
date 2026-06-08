@@ -246,7 +246,31 @@ body { font-family: 'Nunito', system-ui, sans-serif; background: #f0faf8; color:
         <input type="email" id="fOwnerEmail" placeholder="tu@email.com">
       </div>
     </div>
-
+<div class="card">
+  <div class="card-title">💉 Vacunas</div>
+  <div id="vacunasList"></div>
+  <div class="field-row">
+    <div class="field">
+      <label>Nombre vacuna</label>
+      <input type="text" id="vNombre" placeholder="Ej: Rabia">
+    </div>
+    <div class="field">
+      <label>Fecha aplicación</label>
+      <input type="date" id="vFecha">
+    </div>
+  </div>
+  <div class="field-row">
+    <div class="field">
+      <label>Próxima dosis</label>
+      <input type="date" id="vProxima">
+    </div>
+    <div class="field">
+      <label>Veterinario</label>
+      <input type="text" id="vVet" placeholder="Nombre del vet">
+    </div>
+  </div>
+  <button type="button" onclick="agregarVacuna()" style="width:100%; background:rgba(42,191,163,.1); border:1px dashed #2ABFA3; color:#2ABFA3; border-radius:10px; padding:10px; font-size:14px; font-weight:800; cursor:pointer; font-family:inherit;">+ Agregar vacuna</button>
+</div>
     <button class="btn-activate" onclick="activarPlaca()">🐾 Activar mi PawID</button>
   </div>
 
