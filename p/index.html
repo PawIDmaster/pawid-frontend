@@ -505,6 +505,43 @@ function showToast(msg) {
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 3000);
 }
+  let vacunas = [];
+
+function agregarVacuna() {
+  const nombre = document.getElementById('vNombre').value.trim();
+  const fecha = document.getElementById('vFecha').value;
+  if (!nombre) { showToast('⚠️ Escribe el nombre de la vacuna'); return; }
+
+  vacunas.push({
+    name: nombre,
+    applied_date: fecha || null,
+    next_due_date: document.getElementById('vProxima').value || null,
+    vet_name: document.getElementById('vVet').value.trim() || null
+  });
+
+  // Limpiar campos
+  document.getElementById('vNombre').value = '';
+  document.getElementById('vFecha').value = '';
+  document.getElementById('vProxima').value = '';
+  document.getElementById('vVet').value = '';
+
+  // Mostrar lista
+  const list = document.getElementById('vacunasList');
+  list.innerHTML = vacunas.map((v, i) => `
+    <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(42,191,163,.08); border-radius:8px; padding:8px 12px; margin-bottom:6px;">
+      <span style="font-size:13px; font-weight:700; color:#0A7A65;">💉 ${v.name} ${v.applied_date ? '· ' + v.applied_date : ''}</span>
+      <button onclick="eliminarVacuna(${i})" style="background:none; border:none; color:#EF4444; cursor:pointer; font-size:16px;">×</button>
+    </div>
+  `).join('');
+
+  showToast('✅ Vacuna agregada');
+}
+
+function eliminarVacuna(i) {
+  vacunas.splice(i, 1);
+  agregarVacuna(); // Actualiza lista sin agregar
+  vacunas.pop(); // Quita el vacío que se agregó
+}
 </script>
 </body>
 </html>
