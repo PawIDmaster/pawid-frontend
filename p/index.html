@@ -420,7 +420,7 @@ function showProfile(pet, code) {
         <img class="pet-avatar" src="${pet.photo_url || 'https://placedog.net/200/200?id=10'}" alt="${pet.name}">
       </div>
       <div class="pet-name">${pet.name}</div>
-      <div class="pet-breed">${pet.species || ''} ${pet.breed ? '· ' + pet.breed : ''} ${pet.age_years ? '· ' + pet.age_years : ''}</div>
+      <div class="pet-breed">${pet.species || ''} ${pet.breed ? '· ' + pet.breed : ''} ${pet.sex ? '· ' + pet.sex : ''}</div>
       <div class="pet-badge">Identificada con PawID</div>
     </div>
     <div class="content" style="padding-top:16px;">
