@@ -300,7 +300,7 @@ async function loginGoogle() {
   const { error } = await sb.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: window.location.href
+      redirectTo: 'https://pawid.auditag.sbs/dashboard/'
     }
   });
   if (error) showToast('❌ Error: ' + error.message);
