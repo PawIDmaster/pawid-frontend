@@ -590,11 +590,17 @@ function renderVaccines() {
   const div = document.getElementById('vaccinesView');
   if (currentPet.vaccines && currentPet.vaccines.length > 0) {
     div.innerHTML = currentPet.vaccines.map(v =>
-      `<span class="vacc-pill">💉 ${v.name} ${v.applied_date ? '· ' + v.applied_date : ''}</span>`
+      `<span class="vacc-pill">💉 ${v.name} ${v.applied_date ? '· ' + formatDate(v.applied_date) : ''}</span>`
     ).join('');
   } else {
     div.textContent = 'No hay vacunas registradas';
   }
+}
+  function formatDate(dateStr) {
+  if (!dateStr) return '';
+  const months = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  const d = new Date(dateStr);
+  return months[d.getMonth()] + ' ' + d.getFullYear();
 }
 </script>
 </body>
