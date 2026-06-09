@@ -251,13 +251,25 @@ body { font-family: 'Nunito', system-ui, sans-serif; background: #f0faf8; color:
       </div>
     </div>
 
-    <!-- VACUNAS -->
-    <div class="section-card">
-      <div class="section-header">
-        <div class="section-title">💉 Vacunas</div>
-      </div>
-      <div id="vaccinesView">—</div>
+   <!-- VACUNAS -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-title">💉 Vacunas</div>
+    <button class="btn-edit" onclick="toggleAddVaccine()">+ Agregar</button>
+  </div>
+  <div id="vaccinesView">—</div>
+  <div id="vaccineForm" style="display:none; margin-top:14px;">
+    <div class="field-row">
+      <div class="field"><label>Nombre</label><input type="text" id="vacNombre" placeholder="Ej: Rabia"></div>
+      <div class="field"><label>Fecha aplicación</label><input type="date" id="vacFecha"></div>
     </div>
+    <div class="field-row">
+      <div class="field"><label>Próxima dosis</label><input type="date" id="vacProxima"></div>
+      <div class="field"><label>Veterinario</label><input type="text" id="vacVet" placeholder="Nombre"></div>
+    </div>
+    <button class="btn-save" onclick="saveVaccine()">Guardar vacuna</button>
+  </div>
+</div>
 
   </div>
 </div>
@@ -541,6 +553,48 @@ function showToast(msg) {
   t.textContent = msg;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 3000);
+}
+  function toggleAddVaccine() {
+  const form = document.getElementById('vaccineForm');
+  form.style.display = form.style.display === 'none' ? 'block' : 'none';
+}
+
+async function saveVaccine() {
+  const nombre = document.getElementById('vacNombre').value.trim();
+  if (!nombre) { showToast('⚠️ Escribe el nombre de la vacuna'); return; }
+
+  const { error } = await sb.from('vaccines').insert({
+    pet_id: currentPet.id,
+    name: nombre,
+    applied_date: document.getElementById('vacFecha').value || null,
+    next_due_date: document.getElementById('vacProxima').value || null,
+    vet_name: document.getElementById('vacVet').value.trim() || null
+  });
+
+  if (error) { showToast('❌ Error: ' + error.message); return; }
+
+  showToast('✅ Vacuna guardada');
+  document.getElementById('vacNombre').value = '';
+  document.getElementById('vacFecha').value = '';
+  document.getElementById('vacProxima').value = '';
+  document.getElementById('vacVet').value = '';
+  document.getElementById('vaccineForm').style.display = 'none';
+
+  // Recargar vacunas
+  const { data: vaccines } = await sb.from('vaccines').select('*').eq('pet_id', currentPet.id);
+  currentPet.vaccines = vaccines || [];
+  renderVaccines();
+}
+
+function renderVaccines() {
+  const div = document.getElementById('vaccinesView');
+  if (currentPet.vaccines && currentPet.vaccines.length > 0) {
+    div.innerHTML = currentPet.vaccines.map(v =>
+      `<span class="vacc-pill">💉 ${v.name} ${v.applied_date ? '· ' + v.applied_date : ''}</span>`
+    ).join('');
+  } else {
+    div.textContent = 'No hay vacunas registradas';
+  }
 }
 </script>
 </body>
