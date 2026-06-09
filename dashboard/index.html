@@ -319,11 +319,15 @@ async function loadDashboard(user) {
   document.getElementById('userAvatar').src = user.user_metadata?.avatar_url || '';
 
   // Buscar placa del dueño por email o teléfono
-  const { data: pets } = await sb
+  const { data: pets, error: petsError } = await sb
     .from('pets')
     .select('*, vaccines(*)')
     .eq('owner_email', user.email)
     .limit(1);
+
+console.log('Email buscado:', user.email);
+console.log('Pets encontrados:', pets);
+console.log('Error:', petsError);
 
   if (!pets || pets.length === 0) {
     // Buscar por owner_phone si tiene
