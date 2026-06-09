@@ -438,7 +438,7 @@ function showProfile(pet, code) {
         ${pet.microchip ? `<div class="info-card"><div class="info-label">Microchip</div><div class="info-val" style="font-size:11px;">${pet.microchip}</div></div>` : ''}
         ${pet.color ? `<div class="info-card"><div class="info-label">Color</div><div class="info-val">${pet.color}</div></div>` : ''}
       </div>
-${pet.vaccines && pet.vaccines.length > 0 ? '<div class="section"><div class="section-title">💉 Vacunas</div>' + pet.vaccines.map(v => '<span class="vacc-pill">' + v.name + (v.applied_date ? ' <span class="vacc-date">· ' + formatDate(v.applied_date) + '</span>' : '') + '</span>' ' <span class="vacc-date">· ' + v.applied_date.split('T')[0] : '') + '</span>').join('') + '</div>' : ''}
+${pet.vaccines && pet.vaccines.length > 0 ? '<div class="section"><div class="section-title">💉 Vacunas</div>' + pet.vaccines.map(v => '<span class="vacc-pill">' + v.name + (v.applied_date ? ' <span class="vacc-date">· ' + formatDate(v.applied_date) + '</span>' : '') + '</span>').join('') + '</div>' : ''}
 ${pet.clinical_notes ? '<div class="section"><div class="section-title">Notas clínicas</div><div style="font-size:13px;color:#555;line-height:1.7;">' + pet.clinical_notes + '</div></div>' : ''}
       <div class="cta-section">
         <div class="cta-owner">${pet.owner_name || 'Dueño'}</div>
