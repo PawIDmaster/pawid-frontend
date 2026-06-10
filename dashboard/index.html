@@ -605,6 +605,28 @@ function renderVaccines() {
   const year = parts[0];
   return months[month] + ' ' + year;
 }
+  async function uploadPhoto(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  showToast('📤 Subiendo foto...');
+
+  const ext = file.name.split('.').pop();
+  const fileName = currentPet.id + '.' + ext;
+
+  const { data, error } = await sb.storage
+    .from('pet-photos')
+    .upload(fileName, file, { upsert: true });
+
+  if (error) { showToast('❌ Error: ' + error.message); return; }
+
+  const { data: urlData } = sb.storage.from('pet-photos').getPublicUrl(fileName);
+  const photoUrl = urlData.publicUrl;
+
+  await sb.from('pets').update({ photo_url: photoUrl }).eq('id', currentPet.id);
+  currentPet.photo_url = photoUrl;
+  document.getElementById('dashPetPhoto').src = photoUrl;
+  showToast('✅ Foto actualizada');
+}
 </script>
 </body>
 </html>
