@@ -146,7 +146,8 @@ body { font-family: 'Nunito', system-ui, sans-serif; background: #f0faf8; color:
 
     <!-- Tarjeta mascota -->
     <div class="pet-card" id="petCard">
-      <img class="pet-card-avatar" id="dashPetPhoto" src="https://placedog.net/200/200?id=10" alt="">
+      <img class="pet-card-avatar" id="dashPetPhoto" src="" alt="" onclick="document.getElementById('photoUploadInput').click()" style="cursor:pointer;" title="Toca para cambiar la foto">
+<input type="file" id="photoUploadInput" accept="image/*" style="display:none;" onchange="uploadPhoto(event)">
       <div class="pet-card-info">
         <div class="pet-card-name" id="dashPetName">—</div>
         <div class="pet-card-breed" id="dashPetBreed">—</div>
