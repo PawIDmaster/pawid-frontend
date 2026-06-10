@@ -9,7 +9,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap');
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Nunito', system-ui, sans-serif; background: #f0faf8; color: #111; min-height: 100vh; }
-
 .header { background: #0A1628; padding: 14px 20px; display: flex; align-items: center; gap: 10px; }
 .header-logo { width: 34px; height: 34px; background: #2ABFA3; border-radius: 9px; display: flex; align-items: center; justify-content: center; }
 .header-name { font-size: 19px; font-weight: 900; color: #fff; letter-spacing: -.5px; }
@@ -17,91 +16,72 @@ body { font-family: 'Nunito', system-ui, sans-serif; background: #f0faf8; color:
 .header-user { margin-left: auto; display: flex; align-items: center; gap: 10px; }
 .header-avatar { width: 32px; height: 32px; border-radius: 50%; border: 2px solid #2ABFA3; }
 .btn-logout { background: transparent; border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.6); border-radius: 8px; padding: 6px 12px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: inherit; }
-
 .content { max-width: 480px; margin: 0 auto; padding: 24px 16px 48px; }
-
-/* LOGIN */
 .login-box { text-align: center; padding: 60px 20px; }
 .login-icon { font-size: 56px; margin-bottom: 16px; }
 .login-box h2 { font-size: 26px; font-weight: 900; color: #0A1628; margin-bottom: 8px; }
 .login-box p { font-size: 15px; color: #666; margin-bottom: 32px; line-height: 1.6; }
-.btn-google {
-  display: inline-flex; align-items: center; gap: 12px;
-  background: #fff; color: #111; border: 1.5px solid #ddd;
-  border-radius: 30px; padding: 14px 28px; font-size: 15px; font-weight: 800;
-  cursor: pointer; font-family: inherit; box-shadow: 0 2px 8px rgba(0,0,0,.08);
-}
-.btn-google:hover { box-shadow: 0 4px 16px rgba(0,0,0,.12); }
+.btn-google { display: inline-flex; align-items: center; gap: 12px; background: #fff; color: #111; border: 1.5px solid #ddd; border-radius: 30px; padding: 14px 28px; font-size: 15px; font-weight: 800; cursor: pointer; font-family: inherit; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
 
-/* DASHBOARD */
+/* SELECTOR DE MASCOTAS */
+.pets-selector { margin-bottom: 16px; }
+.pets-selector-title { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .7px; color: #2ABFA3; margin-bottom: 10px; }
+.pets-list { display: flex; gap: 10px; flex-wrap: wrap; }
+.pet-thumb {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  cursor: pointer; padding: 8px 12px; border-radius: 14px;
+  border: 2px solid transparent; transition: all .2s;
+  background: #fff; box-shadow: 0 2px 8px rgba(10,22,40,.06);
+}
+.pet-thumb.active { border-color: #2ABFA3; background: rgba(42,191,163,.05); }
+.pet-thumb img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 2px solid #ddd; }
+.pet-thumb.active img { border-color: #2ABFA3; }
+.pet-thumb span { font-size: 12px; font-weight: 800; color: #0A1628; }
+.pet-thumb-add {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  cursor: pointer; padding: 8px 12px; border-radius: 14px;
+  border: 2px dashed rgba(42,191,163,.4); background: rgba(42,191,163,.05);
+  color: #2ABFA3; font-size: 12px; font-weight: 800; text-decoration: none;
+  min-width: 72px;
+}
+.pet-thumb-add .plus { font-size: 24px; line-height: 1; }
+
 .dashboard { display: none; }
-
-.pet-card {
-  background: linear-gradient(135deg, #0A1628, #0D2240);
-  border-radius: 20px; padding: 24px; margin-bottom: 16px;
-  display: flex; align-items: center; gap: 16px;
-  border: 1px solid rgba(42,191,163,.2);
-}
-.pet-card-avatar { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; border: 3px solid #2ABFA3; flex-shrink: 0; }
+.pet-card { background: linear-gradient(135deg, #0A1628, #0D2240); border-radius: 20px; padding: 24px; margin-bottom: 16px; display: flex; align-items: center; gap: 16px; border: 1px solid rgba(42,191,163,.2); }
+.pet-card-avatar { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; border: 3px solid #2ABFA3; flex-shrink: 0; cursor: pointer; }
 .pet-card-info { flex: 1; }
 .pet-card-name { font-size: 22px; font-weight: 900; color: #fff; }
 .pet-card-breed { font-size: 13px; color: rgba(255,255,255,.5); margin-top: 3px; }
 .pet-card-badge { display: inline-block; background: rgba(42,191,163,.15); border: 1px solid rgba(42,191,163,.3); color: #2ABFA3; font-size: 10px; font-weight: 800; padding: 3px 10px; border-radius: 20px; margin-top: 6px; }
-
-/* MODO MASCOTA PERDIDA */
-.lost-card {
-  border-radius: 16px; padding: 18px; margin-bottom: 16px;
-  border: 2px solid rgba(42,191,163,.2);
-  background: #fff;
-}
+.lost-card { border-radius: 16px; padding: 18px; margin-bottom: 16px; border: 2px solid rgba(42,191,163,.2); background: #fff; }
 .lost-card.active { background: #FEF2F2; border-color: #EF4444; }
 .lost-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
 .lost-title { font-size: 15px; font-weight: 900; color: #0A1628; }
 .lost-card.active .lost-title { color: #991B1B; }
 .lost-desc { font-size: 13px; color: #666; line-height: 1.5; }
 .lost-card.active .lost-desc { color: #7F1D1D; }
-
-/* TOGGLE */
 .toggle { position: relative; width: 52px; height: 28px; flex-shrink: 0; }
 .toggle input { opacity: 0; width: 0; height: 0; }
-.toggle-slider {
-  position: absolute; inset: 0;
-  background: #ddd; border-radius: 28px; cursor: pointer;
-  transition: .3s;
-}
-.toggle-slider:before {
-  content: ''; position: absolute;
-  width: 22px; height: 22px; left: 3px; bottom: 3px;
-  background: #fff; border-radius: 50%; transition: .3s;
-}
+.toggle-slider { position: absolute; inset: 0; background: #ddd; border-radius: 28px; cursor: pointer; transition: .3s; }
+.toggle-slider:before { content: ''; position: absolute; width: 22px; height: 22px; left: 3px; bottom: 3px; background: #fff; border-radius: 50%; transition: .3s; }
 .toggle input:checked + .toggle-slider { background: #EF4444; }
 .toggle input:checked + .toggle-slider:before { transform: translateX(24px); }
-
-/* SECCIONES */
 .section-card { background: #fff; border-radius: 16px; padding: 18px; margin-bottom: 14px; box-shadow: 0 2px 8px rgba(10,22,40,.06); border: 1px solid rgba(42,191,163,.1); }
 .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
 .section-title { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .7px; color: #2ABFA3; }
 .btn-edit { background: rgba(42,191,163,.1); border: none; color: #2ABFA3; border-radius: 8px; padding: 5px 12px; font-size: 12px; font-weight: 800; cursor: pointer; font-family: inherit; }
-
 .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
 .field { margin-bottom: 10px; }
 .field label { display: block; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; color: #2ABFA3; margin-bottom: 4px; }
-.field input, .field select, .field textarea {
-  width: 100%; background: #f8fffe; border: 1px solid rgba(42,191,163,.2);
-  border-radius: 10px; padding: 9px 12px; font-size: 14px; color: #111; font-family: inherit;
-}
+.field input, .field select, .field textarea { width: 100%; background: #f8fffe; border: 1px solid rgba(42,191,163,.2); border-radius: 10px; padding: 9px 12px; font-size: 14px; color: #111; font-family: inherit; }
 .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: #2ABFA3; }
 .field textarea { resize: vertical; min-height: 70px; }
 .field-val { font-size: 14px; font-weight: 700; color: #0A1628; padding: 2px 0; }
-
 .vacc-pill { display: inline-flex; align-items: center; gap: 5px; background: rgba(42,191,163,.1); color: #0A7A65; font-size: 12px; font-weight: 700; padding: 5px 11px; border-radius: 20px; margin: 2px; border: 1px solid rgba(42,191,163,.2); }
-
 .btn-save { width: 100%; background: linear-gradient(135deg, #2ABFA3, #1A9B82); color: #fff; border: none; border-radius: 12px; padding: 14px; font-size: 15px; font-weight: 900; cursor: pointer; font-family: inherit; margin-top: 8px; }
 .btn-view-profile { display: block; text-align: center; background: #0A1628; color: #fff; text-decoration: none; border-radius: 12px; padding: 14px; font-size: 15px; font-weight: 800; margin-bottom: 14px; }
-
-.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #2ABFA3; color: #fff; font-size: 14px; font-weight: 700; padding: 12px 24px; border-radius: 30px; opacity: 0; transition: opacity .3s; pointer-events: none; white-space: nowrap; z-index: 999; box-shadow: 0 8px 24px rgba(42,191,163,.4); }
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #2ABFA3; color: #fff; font-size: 14px; font-weight: 700; padding: 12px 24px; border-radius: 30px; opacity: 0; transition: opacity .3s; pointer-events: none; white-space: nowrap; z-index: 999; }
 .toast.show { opacity: 1; }
-
 .loading { text-align: center; padding: 40px; color: #888; font-size: 15px; }
 </style>
 </head>
@@ -125,7 +105,6 @@ body { font-family: 'Nunito', system-ui, sans-serif; background: #f0faf8; color:
 </div>
 
 <div class="content">
-  <!-- LOGIN -->
   <div class="login-box" id="loginBox">
     <div class="login-icon">🐾</div>
     <h2>Bienvenido a PawID</h2>
@@ -136,18 +115,19 @@ body { font-family: 'Nunito', system-ui, sans-serif; background: #f0faf8; color:
     </button>
   </div>
 
-  <!-- LOADING -->
-  <div class="loading" id="loadingBox" style="display:none;">
-    🔍 Cargando tu perfil...
-  </div>
+  <div class="loading" id="loadingBox" style="display:none;">🔍 Cargando tu perfil...</div>
 
-  <!-- DASHBOARD -->
   <div class="dashboard" id="dashboardBox">
 
-    <!-- Tarjeta mascota -->
+    <!-- SELECTOR DE MASCOTAS (visible cuando hay 2+) -->
+    <div class="pets-selector" id="petsSelector" style="display:none;">
+      <div class="pets-selector-title">Mis mascotas</div>
+      <div class="pets-list" id="petsList"></div>
+    </div>
+
     <div class="pet-card" id="petCard">
-      <img class="pet-card-avatar" id="dashPetPhoto" src="" alt="" onclick="document.getElementById('photoUploadInput').click()" style="cursor:pointer;" title="Toca para cambiar la foto">
-<input type="file" id="photoUploadInput" accept="image/*" style="display:none;" onchange="uploadPhoto(event)">
+      <img class="pet-card-avatar" id="dashPetPhoto" src="" alt="" onclick="document.getElementById('photoUploadInput').click()" title="Toca para cambiar la foto">
+      <input type="file" id="photoUploadInput" accept="image/*" style="display:none;" onchange="uploadPhoto(event)">
       <div class="pet-card-info">
         <div class="pet-card-name" id="dashPetName">—</div>
         <div class="pet-card-breed" id="dashPetBreed">—</div>
@@ -155,7 +135,6 @@ body { font-family: 'Nunito', system-ui, sans-serif; background: #f0faf8; color:
       </div>
     </div>
 
-    <!-- MODO MASCOTA PERDIDA -->
     <div class="lost-card" id="lostCard">
       <div class="lost-header">
         <div class="lost-title">🚨 Modo mascota perdida</div>
@@ -164,22 +143,16 @@ body { font-family: 'Nunito', system-ui, sans-serif; background: #f0faf8; color:
           <span class="toggle-slider"></span>
         </label>
       </div>
-      <div class="lost-desc" id="lostDesc">
-        Cuando está activo, cada vez que alguien escanee la placa de tu mascota recibirás un WhatsApp con la ubicación inmediatamente.
-      </div>
+      <div class="lost-desc" id="lostDesc">Cuando está activo, cada vez que alguien escanee la placa recibirás un WhatsApp con la ubicación inmediatamente.</div>
     </div>
 
-    <!-- Ver perfil público -->
     <a class="btn-view-profile" id="viewProfileBtn" href="#" target="_blank">👁 Ver perfil público</a>
 
-    <!-- DATOS DE LA MASCOTA -->
     <div class="section-card">
       <div class="section-header">
         <div class="section-title">Datos de la mascota</div>
         <button class="btn-edit" id="btnEditPet" onclick="toggleEditPet()">✏️ Editar</button>
       </div>
-
-      <!-- Vista -->
       <div id="petView">
         <div class="field-row">
           <div class="field"><label>Nombre</label><div class="field-val" id="vNombre">—</div></div>
@@ -203,8 +176,6 @@ body { font-family: 'Nunito', system-ui, sans-serif; background: #f0faf8; color:
         </div>
         <div class="field"><label>Notas clínicas</label><div class="field-val" id="vNotas">—</div></div>
       </div>
-
-      <!-- Edición -->
       <div id="petEdit" style="display:none;">
         <div class="field-row">
           <div class="field"><label>Nombre</label><input type="text" id="eName"></div>
@@ -231,7 +202,6 @@ body { font-family: 'Nunito', system-ui, sans-serif; background: #f0faf8; color:
       </div>
     </div>
 
-    <!-- DATOS DEL DUEÑO -->
     <div class="section-card">
       <div class="section-header">
         <div class="section-title">Datos de contacto</div>
@@ -252,25 +222,24 @@ body { font-family: 'Nunito', system-ui, sans-serif; background: #f0faf8; color:
       </div>
     </div>
 
-   <!-- VACUNAS -->
-<div class="section-card">
-  <div class="section-header">
-    <div class="section-title">💉 Vacunas</div>
-    <button class="btn-edit" onclick="toggleAddVaccine()">+ Agregar</button>
-  </div>
-  <div id="vaccinesView">—</div>
-  <div id="vaccineForm" style="display:none; margin-top:14px;">
-    <div class="field-row">
-      <div class="field"><label>Nombre</label><input type="text" id="vacNombre" placeholder="Ej: Rabia"></div>
-      <div class="field"><label>Fecha aplicación</label><input type="date" id="vacFecha"></div>
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-title">💉 Vacunas</div>
+        <button class="btn-edit" onclick="toggleAddVaccine()">+ Agregar</button>
+      </div>
+      <div id="vaccinesView">—</div>
+      <div id="vaccineForm" style="display:none; margin-top:14px;">
+        <div class="field-row">
+          <div class="field"><label>Nombre</label><input type="text" id="vacNombre" placeholder="Ej: Rabia"></div>
+          <div class="field"><label>Fecha aplicación</label><input type="date" id="vacFecha"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Próxima dosis</label><input type="date" id="vacProxima"></div>
+          <div class="field"><label>Veterinario</label><input type="text" id="vacVet" placeholder="Nombre"></div>
+        </div>
+        <button class="btn-save" onclick="saveVaccine()">Guardar vacuna</button>
+      </div>
     </div>
-    <div class="field-row">
-      <div class="field"><label>Próxima dosis</label><input type="date" id="vacProxima"></div>
-      <div class="field"><label>Veterinario</label><input type="text" id="vacVet" placeholder="Nombre"></div>
-    </div>
-    <button class="btn-save" onclick="saveVaccine()">Guardar vacuna</button>
-  </div>
-</div>
 
   </div>
 </div>
@@ -281,42 +250,32 @@ body { font-family: 'Nunito', system-ui, sans-serif; background: #f0faf8; color:
 const SUPABASE_URL = 'https://obmzvxaokgjvwvkhxlkp.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ibXp2eGFva2dqdnd2a2h4bGtwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzODczODEsImV4cCI6MjA5Mzk2MzM4MX0.VkhfFrJXXZwjl4EEYkjRtJwYSOkaPEQfQ8QNu8uUTbs';
 const API = 'https://pawid-api.onrender.com';
-
 const { createClient } = supabase;
 const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 let currentUser = null;
 let currentPet = null;
 let currentPlate = null;
+let allPets = [];
 
-// Inicializar
+function formatDate(dateStr) {
+  if (!dateStr) return '';
+  const months = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  const parts = dateStr.split('T')[0].split('-');
+  return months[parseInt(parts[1]) - 1] + ' ' + parts[0];
+}
+
 window.addEventListener('load', async () => {
   const { data: { session } } = await sb.auth.getSession();
-  if (session) {
-    showLoading();
-    await loadDashboard(session.user);
-  }
-
-  // Manejar callback de OAuth
+  if (session) { showLoading(); await loadDashboard(session.user); }
   sb.auth.onAuthStateChange(async (event, session) => {
-    if (event === 'SIGNED_IN' && session) {
-      showLoading();
-      await loadDashboard(session.user);
-    }
-    if (event === 'SIGNED_OUT') {
-      showLogin();
-    }
+    if (event === 'SIGNED_IN' && session) { showLoading(); await loadDashboard(session.user); }
+    if (event === 'SIGNED_OUT') { showLogin(); }
   });
 });
 
 async function loginGoogle() {
-  const { error } = await sb.auth.signInWithOAuth({
-    provider: 'google',
-    options: {
-      redirectTo: 'https://pawid.auditag.sbs/dashboard/'
-    }
-  });
-  if (error) showToast('❌ Error: ' + error.message);
+  await sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: 'https://pawid.auditag.sbs/dashboard/' } });
 }
 
 async function logout() {
@@ -326,24 +285,12 @@ async function logout() {
 
 async function loadDashboard(user) {
   currentUser = user;
-
-  // Mostrar avatar
   document.getElementById('headerUser').style.display = 'flex';
   document.getElementById('userAvatar').src = user.user_metadata?.avatar_url || '';
 
-  // Buscar placa del dueño por email o teléfono
-  const { data: pets, error: petsError } = await sb
-    .from('pets')
-    .select('*, vaccines(*)')
-    .eq('owner_email', user.email)
-    .limit(1);
-
-console.log('Email buscado:', user.email);
-console.log('Pets encontrados:', pets);
-console.log('Error:', petsError);
+  const { data: pets } = await sb.from('pets').select('*, vaccines(*)').eq('owner_email', user.email);
 
   if (!pets || pets.length === 0) {
-    // Buscar por owner_phone si tiene
     document.getElementById('loadingBox').style.display = 'none';
     document.getElementById('loginBox').style.display = 'none';
     document.getElementById('dashboardBox').style.display = 'block';
@@ -351,44 +298,57 @@ console.log('Error:', petsError);
     return;
   }
 
-  currentPet = pets[0];
+  allPets = pets;
 
-  // Buscar placa
-  const { data: plates } = await sb
-    .from('plates')
-    .select('code')
-    .eq('pet_id', currentPet.id)
-    .single();
+  // Cargar placas para todas las mascotas
+  for (let pet of allPets) {
+    const { data: plate } = await sb.from('plates').select('code').eq('pet_id', pet.id).single();
+    pet._plate = plate;
+  }
 
-  currentPlate = plates;
+  // Si hay más de una mascota mostrar selector
+  if (allPets.length > 1) {
+    document.getElementById('petsSelector').style.display = 'block';
+    renderPetsSelector();
+  }
 
+  // Mostrar primera mascota por defecto
+  selectPet(allPets[0]);
+}
+
+function renderPetsSelector() {
+  const list = document.getElementById('petsList');
+  list.innerHTML = allPets.map((pet, i) =>
+    '<div class="pet-thumb' + (currentPet && currentPet.id === pet.id ? ' active' : '') + '" onclick="selectPet(allPets[' + i + '])">' +
+    '<img src="' + (pet.photo_url || 'https://placedog.net/200/200?id=' + (i+1)) + '" alt="' + pet.name + '">' +
+    '<span>' + pet.name + '</span></div>'
+  ).join('') +
+  '<a class="pet-thumb-add" href="https://pawid.auditag.sbs/p/" title="Activar nueva placa"><div class="plus">+</div><span>Agregar</span></a>';
+}
+
+function selectPet(pet) {
+  currentPet = pet;
+  currentPlate = pet._plate;
+  if (allPets.length > 1) renderPetsSelector();
   renderDashboard();
 }
 
 function renderDashboard() {
   const pet = currentPet;
-
   document.getElementById('loginBox').style.display = 'none';
   document.getElementById('loadingBox').style.display = 'none';
   document.getElementById('dashboardBox').style.display = 'block';
 
-  // Tarjeta mascota
   document.getElementById('dashPetPhoto').src = pet.photo_url || 'https://placedog.net/200/200?id=10';
   document.getElementById('dashPetName').textContent = pet.name || '—';
   document.getElementById('dashPetBreed').textContent = [pet.species, pet.breed].filter(Boolean).join(' · ');
   document.getElementById('dashPetCode').textContent = currentPlate ? '🏷 ' + currentPlate.code : 'PawID';
 
-  // Link perfil público
-  if (currentPlate) {
-    document.getElementById('viewProfileBtn').href = `/p/?code=${currentPlate.code}`;
-  }
+  if (currentPlate) document.getElementById('viewProfileBtn').href = '/p/?code=' + currentPlate.code;
 
-  // Modo mascota perdida
-  const lostToggle = document.getElementById('lostToggle');
-  lostToggle.checked = pet.lost_mode;
+  document.getElementById('lostToggle').checked = pet.lost_mode;
   updateLostCard(pet.lost_mode);
 
-  // Datos mascota
   document.getElementById('vNombre').textContent = pet.name || '—';
   document.getElementById('vEspecie').textContent = pet.species || '—';
   document.getElementById('vRaza').textContent = pet.breed || '—';
@@ -400,20 +360,17 @@ function renderDashboard() {
   document.getElementById('vSangre').textContent = pet.blood_type || '—';
   document.getElementById('vAlergias').textContent = pet.allergies || '—';
   document.getElementById('vNotas').textContent = pet.clinical_notes || '—';
-
-  // Datos dueño
   document.getElementById('vOwnerName').textContent = pet.owner_name || '—';
   document.getElementById('vOwnerPhone').textContent = pet.owner_phone || '—';
 
-  // Vacunas
-  const vaccinesDiv = document.getElementById('vaccinesView');
-  if (pet.vaccines && pet.vaccines.length > 0) {
-    vaccinesDiv.innerHTML = pet.vaccines.map(v =>
-      `<span class="vacc-pill">💉 ${v.name} ${v.applied_date ? '· ' + v.applied_date : ''}</span>`
-    ).join('');
-  } else {
-    vaccinesDiv.textContent = 'No hay vacunas registradas';
-  }
+  // Cerrar ediciones abiertas
+  document.getElementById('petView').style.display = 'block';
+  document.getElementById('petEdit').style.display = 'none';
+  document.getElementById('btnEditPet').textContent = '✏️ Editar';
+  document.getElementById('ownerView').style.display = 'block';
+  document.getElementById('ownerEdit').style.display = 'none';
+
+  renderVaccines();
 }
 
 function updateLostCard(active) {
@@ -431,12 +388,9 @@ function updateLostCard(active) {
 async function toggleLostMode() {
   const active = document.getElementById('lostToggle').checked;
   if (!currentPlate) { showToast('⚠️ No se encontró la placa'); return; }
-
   try {
-    const res = await fetch(`${API}/p/${currentPlate.code}/lost`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ active })
+    const res = await fetch(API + '/p/' + currentPlate.code + '/lost', {
+      method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ active })
     });
     const data = await res.json();
     if (data.success) {
@@ -454,9 +408,7 @@ function toggleEditPet() {
   const view = document.getElementById('petView');
   const edit = document.getElementById('petEdit');
   const btn = document.getElementById('btnEditPet');
-
   if (edit.style.display === 'none') {
-    // Mostrar edición con datos actuales
     const pet = currentPet;
     document.getElementById('eName').value = pet.name || '';
     document.getElementById('eEspecie').value = pet.species || 'Perro';
@@ -469,7 +421,6 @@ function toggleEditPet() {
     document.getElementById('eSangre').value = pet.blood_type || '';
     document.getElementById('eAlergias').value = pet.allergies || '';
     document.getElementById('eNotas').value = pet.clinical_notes || '';
-
     view.style.display = 'none';
     edit.style.display = 'block';
     btn.textContent = '✕ Cancelar';
@@ -495,20 +446,16 @@ async function savePet() {
     clinical_notes: document.getElementById('eNotas').value,
     updated_at: new Date()
   };
-
   const { error } = await sb.from('pets').update(updates).eq('id', currentPet.id);
   if (error) { showToast('❌ Error: ' + error.message); return; }
-
   Object.assign(currentPet, updates);
   renderDashboard();
-  toggleEditPet();
   showToast('✅ Datos guardados');
 }
 
 function toggleEditOwner() {
   const view = document.getElementById('ownerView');
   const edit = document.getElementById('ownerEdit');
-
   if (edit.style.display === 'none') {
     document.getElementById('eOwnerName').value = currentPet.owner_name || '';
     document.getElementById('eOwnerPhone').value = currentPet.owner_phone || '';
@@ -521,19 +468,66 @@ function toggleEditOwner() {
 }
 
 async function saveOwner() {
-  const updates = {
-    owner_name: document.getElementById('eOwnerName').value,
-    owner_phone: document.getElementById('eOwnerPhone').value,
-    updated_at: new Date()
-  };
-
+  const updates = { owner_name: document.getElementById('eOwnerName').value, owner_phone: document.getElementById('eOwnerPhone').value, updated_at: new Date() };
   const { error } = await sb.from('pets').update(updates).eq('id', currentPet.id);
   if (error) { showToast('❌ Error: ' + error.message); return; }
-
   Object.assign(currentPet, updates);
   renderDashboard();
-  toggleEditOwner();
   showToast('✅ Contacto actualizado');
+}
+
+function toggleAddVaccine() {
+  const form = document.getElementById('vaccineForm');
+  form.style.display = form.style.display === 'none' ? 'block' : 'none';
+}
+
+async function saveVaccine() {
+  const nombre = document.getElementById('vacNombre').value.trim();
+  if (!nombre) { showToast('⚠️ Escribe el nombre de la vacuna'); return; }
+  const { error } = await sb.from('vaccines').insert({
+    pet_id: currentPet.id, name: nombre,
+    applied_date: document.getElementById('vacFecha').value || null,
+    next_due_date: document.getElementById('vacProxima').value || null,
+    vet_name: document.getElementById('vacVet').value.trim() || null
+  });
+  if (error) { showToast('❌ Error: ' + error.message); return; }
+  showToast('✅ Vacuna guardada');
+  document.getElementById('vacNombre').value = '';
+  document.getElementById('vacFecha').value = '';
+  document.getElementById('vacProxima').value = '';
+  document.getElementById('vacVet').value = '';
+  document.getElementById('vaccineForm').style.display = 'none';
+  const { data: vaccines } = await sb.from('vaccines').select('*').eq('pet_id', currentPet.id);
+  currentPet.vaccines = vaccines || [];
+  renderVaccines();
+}
+
+function renderVaccines() {
+  const div = document.getElementById('vaccinesView');
+  if (currentPet.vaccines && currentPet.vaccines.length > 0) {
+    div.innerHTML = currentPet.vaccines.map(v =>
+      '<span class="vacc-pill">💉 ' + v.name + (v.applied_date ? ' · ' + formatDate(v.applied_date) : '') + '</span>'
+    ).join('');
+  } else {
+    div.textContent = 'No hay vacunas registradas';
+  }
+}
+
+async function uploadPhoto(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  showToast('📤 Subiendo foto...');
+  const ext = file.name.split('.').pop();
+  const fileName = currentPet.id + '.' + ext;
+  const { error } = await sb.storage.from('pet-photos').upload(fileName, file, { upsert: true });
+  if (error) { showToast('❌ Error: ' + error.message); return; }
+  const { data: urlData } = sb.storage.from('pet-photos').getPublicUrl(fileName);
+  const photoUrl = urlData.publicUrl;
+  await sb.from('pets').update({ photo_url: photoUrl }).eq('id', currentPet.id);
+  currentPet.photo_url = photoUrl;
+  document.getElementById('dashPetPhoto').src = photoUrl;
+  if (allPets.length > 1) renderPetsSelector();
+  showToast('✅ Foto actualizada');
 }
 
 function showLogin() {
@@ -554,78 +548,6 @@ function showToast(msg) {
   t.textContent = msg;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 3000);
-}
-  function toggleAddVaccine() {
-  const form = document.getElementById('vaccineForm');
-  form.style.display = form.style.display === 'none' ? 'block' : 'none';
-}
-
-async function saveVaccine() {
-  const nombre = document.getElementById('vacNombre').value.trim();
-  if (!nombre) { showToast('⚠️ Escribe el nombre de la vacuna'); return; }
-
-  const { error } = await sb.from('vaccines').insert({
-    pet_id: currentPet.id,
-    name: nombre,
-    applied_date: document.getElementById('vacFecha').value || null,
-    next_due_date: document.getElementById('vacProxima').value || null,
-    vet_name: document.getElementById('vacVet').value.trim() || null
-  });
-
-  if (error) { showToast('❌ Error: ' + error.message); return; }
-
-  showToast('✅ Vacuna guardada');
-  document.getElementById('vacNombre').value = '';
-  document.getElementById('vacFecha').value = '';
-  document.getElementById('vacProxima').value = '';
-  document.getElementById('vacVet').value = '';
-  document.getElementById('vaccineForm').style.display = 'none';
-
-  // Recargar vacunas
-  const { data: vaccines } = await sb.from('vaccines').select('*').eq('pet_id', currentPet.id);
-  currentPet.vaccines = vaccines || [];
-  renderVaccines();
-}
-
-function renderVaccines() {
-  const div = document.getElementById('vaccinesView');
-  if (currentPet.vaccines && currentPet.vaccines.length > 0) {
-    div.innerHTML = currentPet.vaccines.map(v =>
-      `<span class="vacc-pill">💉 ${v.name} ${v.applied_date ? '· ' + formatDate(v.applied_date) : ''}</span>`
-    ).join('');
-  } else {
-    div.textContent = 'No hay vacunas registradas';
-  }
-}
-  function formatDate(dateStr) {
-  if (!dateStr) return '';
-  const months = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-  const parts = dateStr.split('T')[0].split('-');
-  const month = parseInt(parts[1]) - 1;
-  const year = parts[0];
-  return months[month] + ' ' + year;
-}
-  async function uploadPhoto(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  showToast('📤 Subiendo foto...');
-
-  const ext = file.name.split('.').pop();
-  const fileName = currentPet.id + '.' + ext;
-
-  const { data, error } = await sb.storage
-    .from('pet-photos')
-    .upload(fileName, file, { upsert: true });
-
-  if (error) { showToast('❌ Error: ' + error.message); return; }
-
-  const { data: urlData } = sb.storage.from('pet-photos').getPublicUrl(fileName);
-  const photoUrl = urlData.publicUrl;
-
-  await sb.from('pets').update({ photo_url: photoUrl }).eq('id', currentPet.id);
-  currentPet.photo_url = photoUrl;
-  document.getElementById('dashPetPhoto').src = photoUrl;
-  showToast('✅ Foto actualizada');
 }
 </script>
 </body>
