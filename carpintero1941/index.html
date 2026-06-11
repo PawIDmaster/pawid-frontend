@@ -1,1 +1,465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PawID — Panel Admin</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap');
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Nunito', system-ui, sans-serif; background: #0A1628; color: #fff; min-height: 100vh; }
 
+.header { background: #060e1a; padding: 14px 24px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(42,191,163,.15); }
+.header-logo { width: 34px; height: 34px; background: #2ABFA3; border-radius: 9px; display: flex; align-items: center; justify-content: center; }
+.header-name { font-size: 18px; font-weight: 900; color: #fff; }
+.header-name span { color: #2ABFA3; }
+.header-badge { margin-left: 8px; background: rgba(42,191,163,.15); border: 1px solid rgba(42,191,163,.3); color: #2ABFA3; font-size: 10px; font-weight: 800; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: .5px; }
+
+.nav { display: flex; gap: 4px; padding: 16px 24px 0; border-bottom: 1px solid rgba(255,255,255,.06); overflow-x: auto; }
+.nav-btn { background: transparent; border: none; color: rgba(255,255,255,.5); padding: 10px 16px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit; border-bottom: 2px solid transparent; white-space: nowrap; transition: all .2s; }
+.nav-btn.active { color: #2ABFA3; border-bottom-color: #2ABFA3; }
+.nav-btn:hover { color: #fff; }
+
+.content { max-width: 1000px; margin: 0 auto; padding: 24px; }
+
+.panel { display: none; }
+.panel.active { display: block; }
+
+.panel-title { font-size: 22px; font-weight: 900; margin-bottom: 4px; }
+.panel-sub { font-size: 14px; color: rgba(255,255,255,.4); margin-bottom: 24px; }
+
+/* STATS */
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 28px; }
+.stat-card { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); border-radius: 14px; padding: 18px; }
+.stat-num { font-size: 32px; font-weight: 900; color: #2ABFA3; }
+.stat-label { font-size: 12px; color: rgba(255,255,255,.4); margin-top: 4px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
+
+/* GENERAR QR */
+.qr-controls { display: flex; gap: 12px; align-items: flex-end; margin-bottom: 24px; flex-wrap: wrap; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: 11px; font-weight: 800; color: rgba(255,255,255,.5); text-transform: uppercase; letter-spacing: .5px; }
+.field input, .field select { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 10px; padding: 10px 14px; font-size: 14px; color: #fff; font-family: inherit; min-width: 120px; }
+.field input:focus, .field select:focus { outline: none; border-color: #2ABFA3; }
+.btn-primary { background: #2ABFA3; color: #fff; border: none; border-radius: 10px; padding: 11px 20px; font-size: 14px; font-weight: 800; cursor: pointer; font-family: inherit; white-space: nowrap; }
+.btn-secondary { background: rgba(255,255,255,.08); color: #fff; border: 1px solid rgba(255,255,255,.15); border-radius: 10px; padding: 11px 20px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; white-space: nowrap; }
+
+.qr-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; margin-bottom: 20px; }
+.qr-item { background: #fff; border-radius: 12px; padding: 16px; text-align: center; }
+.qr-item canvas, .qr-item img { width: 120px !important; height: 120px !important; }
+.qr-code-label { font-size: 12px; font-weight: 800; color: #0A1628; margin-top: 8px; font-family: monospace; }
+.qr-status { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-top: 4px; display: inline-block; }
+.qr-status.virgin { background: #EAF3DE; color: #27500A; }
+.qr-status.activated { background: rgba(42,191,163,.15); color: #0A7A65; }
+
+/* TABLAS */
+.table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid rgba(255,255,255,.08); }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { background: rgba(255,255,255,.05); padding: 12px 16px; text-align: left; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .6px; color: rgba(255,255,255,.4); white-space: nowrap; }
+td { padding: 12px 16px; border-top: 1px solid rgba(255,255,255,.05); color: rgba(255,255,255,.8); vertical-align: middle; }
+tr:hover td { background: rgba(255,255,255,.02); }
+.badge { display: inline-block; font-size: 10px; font-weight: 800; padding: 3px 10px; border-radius: 20px; }
+.badge-virgin { background: rgba(255,200,0,.1); color: #FFD700; border: 1px solid rgba(255,200,0,.2); }
+.badge-activated { background: rgba(42,191,163,.1); color: #2ABFA3; border: 1px solid rgba(42,191,163,.2); }
+.pet-avatar-sm { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(42,191,163,.3); }
+
+.filter-bar { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
+.filter-bar input { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 10px; padding: 8px 14px; font-size: 13px; color: #fff; font-family: inherit; min-width: 200px; }
+.filter-bar input::placeholder { color: rgba(255,255,255,.3); }
+.filter-bar input:focus { outline: none; border-color: #2ABFA3; }
+.count-badge { font-size: 12px; color: rgba(255,255,255,.4); font-weight: 700; }
+
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #2ABFA3; color: #fff; font-size: 14px; font-weight: 700; padding: 12px 24px; border-radius: 30px; opacity: 0; transition: opacity .3s; pointer-events: none; z-index: 999; }
+.toast.show { opacity: 1; }
+
+.loading-msg { text-align: center; padding: 40px; color: rgba(255,255,255,.3); font-size: 15px; }
+
+@media (max-width: 600px) {
+  .content { padding: 16px; }
+  .qr-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">
+    <svg viewBox="0 0 24 24" fill="none" width="20" height="20">
+      <ellipse cx="12" cy="15" rx="5.5" ry="4.5" fill="#fff"/>
+      <ellipse cx="6.5" cy="10" rx="2" ry="2.8" fill="#fff"/>
+      <ellipse cx="17.5" cy="10" rx="2" ry="2.8" fill="#fff"/>
+      <ellipse cx="9" cy="7" rx="1.8" ry="2.3" fill="#fff"/>
+      <ellipse cx="15" cy="7" rx="1.8" ry="2.3" fill="#fff"/>
+    </svg>
+  </div>
+  <span class="header-name">Paw<span>ID</span></span>
+  <span class="header-badge">Admin</span>
+</div>
+
+<div class="nav">
+  <button class="nav-btn active" onclick="showPanel('resumen')">📊 Resumen</button>
+  <button class="nav-btn" onclick="showPanel('qr')">🏷 Generar QR</button>
+  <button class="nav-btn" onclick="showPanel('placas')">📋 Placas</button>
+  <button class="nav-btn" onclick="showPanel('mascotas')">🐾 Mascotas</button>
+  <button class="nav-btn" onclick="showPanel('pedidos')">🛒 Pedidos</button>
+</div>
+
+<div class="content">
+
+  <!-- RESUMEN -->
+  <div class="panel active" id="panel-resumen">
+    <div class="panel-title">Resumen</div>
+    <div class="panel-sub">Estado general de la plataforma</div>
+    <div class="stats">
+      <div class="stat-card"><div class="stat-num" id="statVirgenes">—</div><div class="stat-label">Placas vírgenes</div></div>
+      <div class="stat-card"><div class="stat-num" id="statActivadas">—</div><div class="stat-label">Placas activadas</div></div>
+      <div class="stat-card"><div class="stat-num" id="statMascotas">—</div><div class="stat-label">Mascotas registradas</div></div>
+      <div class="stat-card"><div class="stat-num" id="statPerdidas">—</div><div class="stat-label">Modo perdida activo</div></div>
+    </div>
+    <div class="loading-msg" id="resumenLoading">Cargando estadísticas...</div>
+  </div>
+
+  <!-- GENERAR QR -->
+  <div class="panel" id="panel-qr">
+    <div class="panel-title">Generar QR</div>
+    <div class="panel-sub">Crea nuevas placas vírgenes y descarga los QR para imprimir</div>
+    <div class="qr-controls">
+      <div class="field">
+        <label>Cantidad</label>
+        <input type="number" id="qrCantidad" value="10" min="1" max="50">
+      </div>
+      <div class="field">
+        <label>Tamaño QR</label>
+        <select id="qrTamano">
+          <option value="120">Pequeño (120px)</option>
+          <option value="160" selected>Mediano (160px)</option>
+          <option value="200">Grande (200px)</option>
+        </select>
+      </div>
+      <button class="btn-primary" onclick="generarQRs()">⚡ Generar placas</button>
+      <button class="btn-secondary" id="btnImprimir" onclick="imprimirQRs()" style="display:none;">🖨 Imprimir / PDF</button>
+    </div>
+    <div class="qr-grid" id="qrGrid"></div>
+  </div>
+
+  <!-- PLACAS -->
+  <div class="panel" id="panel-placas">
+    <div class="panel-title">Placas</div>
+    <div class="panel-sub">Todas las placas generadas</div>
+    <div class="filter-bar">
+      <input type="text" id="filterPlacas" placeholder="Buscar por código..." oninput="filtrarPlacas()">
+      <select id="filterStatusPlacas" onchange="filtrarPlacas()" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:8px 14px;font-size:13px;color:#fff;font-family:inherit;">
+        <option value="">Todas</option>
+        <option value="virgin">Vírgenes</option>
+        <option value="activated">Activadas</option>
+      </select>
+      <span class="count-badge" id="countPlacas"></span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Código</th><th>Estado</th><th>Mascota</th><th>Activada</th></tr></thead>
+        <tbody id="placasBody"><tr><td colspan="4" class="loading-msg">Cargando...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- MASCOTAS -->
+  <div class="panel" id="panel-mascotas">
+    <div class="panel-title">Mascotas</div>
+    <div class="panel-sub">Todas las mascotas registradas</div>
+    <div class="filter-bar">
+      <input type="text" id="filterMascotas" placeholder="Buscar por nombre, dueño..." oninput="filtrarMascotas()">
+      <span class="count-badge" id="countMascotas"></span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Foto</th><th>Nombre</th><th>Especie</th><th>Dueño</th><th>WhatsApp</th><th>Modo perdida</th><th>Registrada</th></tr></thead>
+        <tbody id="mascotasBody"><tr><td colspan="7" class="loading-msg">Cargando...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- PEDIDOS -->
+  <div class="panel" id="panel-pedidos">
+    <div class="panel-title">Pedidos</div>
+    <div class="panel-sub">Pedidos recibidos desde la landing de ventas</div>
+    <div class="filter-bar">
+      <input type="text" id="filterPedidos" placeholder="Buscar por nombre, ciudad..." oninput="filtrarPedidos()">
+      <span class="count-badge" id="countPedidos"></span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Fecha</th><th>Nombre</th><th>Teléfono</th><th>Ciudad</th><th>Dirección</th><th>Acción</th></tr></thead>
+        <tbody id="pedidosBody"><tr><td colspan="6" class="loading-msg">Cargando...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SUPABASE_URL = 'https://obmzvxaokgjvwvkhxlkp.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ibXp2eGFva2dqdnd2a2h4bGtwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzODczODEsImV4cCI6MjA5Mzk2MzM4MX0.VkhfFrJXXZwjl4EEYkjRtJwYSOkaPEQfQ8QNu8uUTbs';
+const API = 'https://pawid-api.onrender.com';
+const BASE_URL = 'https://pawid.auditag.sbs/p/?code=';
+
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let allPlacas = [];
+let allMascotas = [];
+let allPedidos = [];
+
+// ── NAVEGACIÓN ──────────────────────────────
+function showPanel(name) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  event.target.classList.add('active');
+  if (name === 'resumen') loadResumen();
+  if (name === 'placas') loadPlacas();
+  if (name === 'mascotas') loadMascotas();
+  if (name === 'pedidos') loadPedidos();
+}
+
+// ── RESUMEN ──────────────────────────────────
+async function loadResumen() {
+  document.getElementById('resumenLoading').style.display = 'block';
+  const { data: placas } = await sb.from('plates').select('status');
+  const { data: mascotas } = await sb.from('pets').select('lost_mode');
+  const virgenes = placas ? placas.filter(p => p.status === 'virgin').length : 0;
+  const activadas = placas ? placas.filter(p => p.status === 'activated').length : 0;
+  const perdidas = mascotas ? mascotas.filter(m => m.lost_mode).length : 0;
+  document.getElementById('statVirgenes').textContent = virgenes;
+  document.getElementById('statActivadas').textContent = activadas;
+  document.getElementById('statMascotas').textContent = mascotas ? mascotas.length : 0;
+  document.getElementById('statPerdidas').textContent = perdidas;
+  document.getElementById('resumenLoading').style.display = 'none';
+}
+
+// ── GENERAR QR ───────────────────────────────
+async function generarQRs() {
+  const cantidad = parseInt(document.getElementById('qrCantidad').value) || 10;
+  const tamano = parseInt(document.getElementById('qrTamano').value) || 160;
+  if (cantidad < 1 || cantidad > 50) { showToast('⚠️ Entre 1 y 50 placas'); return; }
+
+  showToast('⚡ Generando ' + cantidad + ' placas...');
+
+  try {
+    const res = await fetch(API + '/admin/plates/batch', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ quantity: cantidad })
+    });
+    const data = await res.json();
+    if (!data.codes) { showToast('❌ Error generando placas'); return; }
+
+    const grid = document.getElementById('qrGrid');
+    grid.innerHTML = '';
+
+    for (const code of data.codes) {
+      const item = document.createElement('div');
+      item.className = 'qr-item';
+      item.id = 'qr-' + code;
+      const qrDiv = document.createElement('div');
+      item.appendChild(qrDiv);
+      const label = document.createElement('div');
+      label.className = 'qr-code-label';
+      label.textContent = code;
+      item.appendChild(label);
+      const status = document.createElement('div');
+      status.className = 'qr-status virgin';
+      status.textContent = 'VIRGEN';
+      item.appendChild(status);
+      grid.appendChild(item);
+
+      new QRCode(qrDiv, {
+        text: BASE_URL + code,
+        width: tamano, height: tamano,
+        colorDark: '#0A1628', colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.M
+      });
+    }
+
+    document.getElementById('btnImprimir').style.display = 'inline-block';
+    showToast('✅ ' + data.codes.length + ' placas generadas');
+  } catch(e) {
+    showToast('❌ Error: ' + e.message);
+  }
+}
+
+function imprimirQRs() {
+  const grid = document.getElementById('qrGrid');
+  const items = grid.querySelectorAll('.qr-item');
+  if (!items.length) { showToast('⚠️ Genera placas primero'); return; }
+
+  const win = window.open('', '_blank');
+  win.document.write(`
+    <html><head><title>PawID — QR Codes</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 20px; }
+      h2 { color: #0A1628; margin-bottom: 20px; }
+      .grid { display: flex; flex-wrap: wrap; gap: 20px; }
+      .item { text-align: center; border: 1px solid #ddd; border-radius: 10px; padding: 12px; page-break-inside: avoid; }
+      .code { font-family: monospace; font-size: 13px; font-weight: bold; color: #0A1628; margin-top: 6px; }
+      .url { font-size: 9px; color: #666; word-break: break-all; margin-top: 3px; }
+      @media print { body { margin: 10px; } }
+    </style></head><body>
+    <h2>PawID — Placas QR</h2>
+    <div class="grid">
+  `);
+
+  items.forEach(item => {
+    const code = item.querySelector('.qr-code-label').textContent;
+    const canvas = item.querySelector('canvas');
+    const img = canvas ? canvas.toDataURL() : '';
+    win.document.write(`
+      <div class="item">
+        <img src="${img}" width="120" height="120">
+        <div class="code">${code}</div>
+        <div class="url">${BASE_URL + code}</div>
+      </div>
+    `);
+  });
+
+  win.document.write('</div></body></html>');
+  win.document.close();
+  win.print();
+}
+
+// ── PLACAS ───────────────────────────────────
+async function loadPlacas() {
+  const { data } = await sb.from('plates').select('*, pets(name)').order('created_at', { ascending: false });
+  allPlacas = data || [];
+  document.getElementById('countPlacas').textContent = allPlacas.length + ' placas';
+  renderPlacas(allPlacas);
+}
+
+function filtrarPlacas() {
+  const q = document.getElementById('filterPlacas').value.toLowerCase();
+  const status = document.getElementById('filterStatusPlacas').value;
+  const filtered = allPlacas.filter(p =>
+    (!q || p.code.toLowerCase().includes(q)) &&
+    (!status || p.status === status)
+  );
+  document.getElementById('countPlacas').textContent = filtered.length + ' placas';
+  renderPlacas(filtered);
+}
+
+function renderPlacas(data) {
+  const body = document.getElementById('placasBody');
+  if (!data.length) { body.innerHTML = '<tr><td colspan="4" class="loading-msg">No hay placas</td></tr>'; return; }
+  body.innerHTML = data.map(p => `
+    <tr>
+      <td><code style="color:#2ABFA3;font-size:13px;font-weight:800;">${p.code}</code></td>
+      <td><span class="badge badge-${p.status}">${p.status === 'virgin' ? 'Virgen' : 'Activada'}</span></td>
+      <td>${p.pets ? p.pets.name : '—'}</td>
+      <td style="color:rgba(255,255,255,.4);font-size:12px;">${p.activated_at ? new Date(p.activated_at).toLocaleDateString('es-CO') : '—'}</td>
+    </tr>
+  `).join('');
+}
+
+// ── MASCOTAS ─────────────────────────────────
+async function loadMascotas() {
+  const { data } = await sb.from('pets').select('*').order('created_at', { ascending: false });
+  allMascotas = data || [];
+  document.getElementById('countMascotas').textContent = allMascotas.length + ' mascotas';
+  renderMascotas(allMascotas);
+}
+
+function filtrarMascotas() {
+  const q = document.getElementById('filterMascotas').value.toLowerCase();
+  const filtered = allMascotas.filter(m =>
+    !q || (m.name||'').toLowerCase().includes(q) ||
+    (m.owner_name||'').toLowerCase().includes(q) ||
+    (m.owner_phone||'').includes(q)
+  );
+  document.getElementById('countMascotas').textContent = filtered.length + ' mascotas';
+  renderMascotas(filtered);
+}
+
+function renderMascotas(data) {
+  const body = document.getElementById('mascotasBody');
+  if (!data.length) { body.innerHTML = '<tr><td colspan="7" class="loading-msg">No hay mascotas</td></tr>'; return; }
+  body.innerHTML = data.map(m => `
+    <tr>
+      <td><img class="pet-avatar-sm" src="${m.photo_url || 'https://placedog.net/40/40?id=1'}" alt="${m.name}"></td>
+      <td style="font-weight:800;">${m.name || '—'}</td>
+      <td style="color:rgba(255,255,255,.5);">${m.species || '—'}</td>
+      <td>${m.owner_name || '—'}</td>
+      <td>
+        ${m.owner_phone ? `<a href="https://wa.me/57${m.owner_phone}" target="_blank" style="color:#2ABFA3;text-decoration:none;">📱 ${m.owner_phone}</a>` : '—'}
+      </td>
+      <td>${m.lost_mode ? '<span class="badge" style="background:rgba(239,68,68,.15);color:#EF4444;border:1px solid rgba(239,68,68,.2);">🚨 ACTIVO</span>' : '<span style="color:rgba(255,255,255,.3);font-size:12px;">—</span>'}</td>
+      <td style="color:rgba(255,255,255,.4);font-size:12px;">${new Date(m.created_at).toLocaleDateString('es-CO')}</td>
+    </tr>
+  `).join('');
+}
+
+// ── PEDIDOS ──────────────────────────────────
+async function loadPedidos() {
+  try {
+    const SHEET_ID = '11nTZ8f9UlWVd_QGYVhX07AvX1P5jPfTmPY8KWwnLzbg';
+    const res = await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`);
+    const text = await res.text();
+    const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*?)\);/)[1]);
+    const rows = json.table.rows || [];
+    allPedidos = rows.map(r => ({
+      fecha: r.c[0]?.v || '—',
+      nombre: r.c[1]?.v || '—',
+      telefono: r.c[2]?.v || '—',
+      ciudad: r.c[3]?.v || '—',
+      direccion: r.c[4]?.v || '—'
+    })).reverse();
+    document.getElementById('countPedidos').textContent = allPedidos.length + ' pedidos';
+    renderPedidos(allPedidos);
+  } catch(e) {
+    document.getElementById('pedidosBody').innerHTML = '<tr><td colspan="6" class="loading-msg">Error cargando pedidos. Verifica que el Sheet es público.</td></tr>';
+  }
+}
+
+function filtrarPedidos() {
+  const q = document.getElementById('filterPedidos').value.toLowerCase();
+  const filtered = allPedidos.filter(p =>
+    !q || (p.nombre||'').toLowerCase().includes(q) ||
+    (p.ciudad||'').toLowerCase().includes(q) ||
+    (p.telefono||'').includes(q)
+  );
+  document.getElementById('countPedidos').textContent = filtered.length + ' pedidos';
+  renderPedidos(filtered);
+}
+
+function renderPedidos(data) {
+  const body = document.getElementById('pedidosBody');
+  if (!data.length) { body.innerHTML = '<tr><td colspan="6" class="loading-msg">No hay pedidos</td></tr>'; return; }
+  body.innerHTML = data.map(p => `
+    <tr>
+      <td style="color:rgba(255,255,255,.4);font-size:12px;">${p.fecha}</td>
+      <td style="font-weight:800;">${p.nombre}</td>
+      <td>
+        ${p.telefono && p.telefono !== '—' ? `<a href="https://wa.me/57${p.telefono}" target="_blank" style="color:#2ABFA3;text-decoration:none;">📱 ${p.telefono}</a>` : '—'}
+      </td>
+      <td style="color:rgba(255,255,255,.5);">${p.ciudad}</td>
+      <td style="color:rgba(255,255,255,.5);font-size:12px;">${p.direccion}</td>
+      <td>
+        <a href="https://wa.me/57${p.telefono}?text=Hola%20${encodeURIComponent(p.nombre)},%20soy%20PawID.%20Tu%20pedido%20est%C3%A1%20listo.%20%C2%BFCu%C3%A1ndo%20te%20podemos%20hacer%20entrega?" target="_blank" style="background:#25D366;color:#fff;text-decoration:none;border-radius:8px;padding:5px 12px;font-size:12px;font-weight:700;">WhatsApp</a>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// Cargar resumen al inicio
+loadResumen();
+</script>
+</body>
+</html>
