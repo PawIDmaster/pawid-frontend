@@ -10,41 +10,34 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap');
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Nunito', system-ui, sans-serif; background: #0A1628; color: #fff; min-height: 100vh; }
-
 .header { background: #060e1a; padding: 14px 24px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(42,191,163,.15); }
 .header-logo { width: 34px; height: 34px; background: #2ABFA3; border-radius: 9px; display: flex; align-items: center; justify-content: center; }
 .header-name { font-size: 18px; font-weight: 900; color: #fff; }
 .header-name span { color: #2ABFA3; }
 .header-badge { margin-left: 8px; background: rgba(42,191,163,.15); border: 1px solid rgba(42,191,163,.3); color: #2ABFA3; font-size: 10px; font-weight: 800; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: .5px; }
-
 .nav { display: flex; gap: 4px; padding: 16px 24px 0; border-bottom: 1px solid rgba(255,255,255,.06); overflow-x: auto; }
 .nav-btn { background: transparent; border: none; color: rgba(255,255,255,.5); padding: 10px 16px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit; border-bottom: 2px solid transparent; white-space: nowrap; transition: all .2s; }
 .nav-btn.active { color: #2ABFA3; border-bottom-color: #2ABFA3; }
 .nav-btn:hover { color: #fff; }
-
 .content { max-width: 1000px; margin: 0 auto; padding: 24px; }
-
 .panel { display: none; }
 .panel.active { display: block; }
-
 .panel-title { font-size: 22px; font-weight: 900; margin-bottom: 4px; }
 .panel-sub { font-size: 14px; color: rgba(255,255,255,.4); margin-bottom: 24px; }
-
-/* STATS */
 .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 28px; }
 .stat-card { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); border-radius: 14px; padding: 18px; }
 .stat-num { font-size: 32px; font-weight: 900; color: #2ABFA3; }
 .stat-label { font-size: 12px; color: rgba(255,255,255,.4); margin-top: 4px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
-
-/* GENERAR QR */
-.qr-controls { display: flex; gap: 12px; align-items: flex-end; margin-bottom: 24px; flex-wrap: wrap; }
+.qr-controls { display: flex; gap: 12px; align-items: flex-end; margin-bottom: 16px; flex-wrap: wrap; }
 .field { display: flex; flex-direction: column; gap: 6px; }
 .field label { font-size: 11px; font-weight: 800; color: rgba(255,255,255,.5); text-transform: uppercase; letter-spacing: .5px; }
 .field input, .field select { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 10px; padding: 10px 14px; font-size: 14px; color: #fff; font-family: inherit; min-width: 120px; }
 .field input:focus, .field select:focus { outline: none; border-color: #2ABFA3; }
 .btn-primary { background: #2ABFA3; color: #fff; border: none; border-radius: 10px; padding: 11px 20px; font-size: 14px; font-weight: 800; cursor: pointer; font-family: inherit; white-space: nowrap; }
 .btn-secondary { background: rgba(255,255,255,.08); color: #fff; border: 1px solid rgba(255,255,255,.15); border-radius: 10px; padding: 11px 20px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; white-space: nowrap; }
-
+.btn-teal-outline { background: transparent; color: #2ABFA3; border: 1.5px solid #2ABFA3; border-radius: 10px; padding: 11px 20px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; white-space: nowrap; }
+.divider { border: none; border-top: 1px solid rgba(255,255,255,.08); margin: 20px 0; }
+.section-label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .7px; color: rgba(255,255,255,.4); margin-bottom: 12px; }
 .qr-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; margin-bottom: 20px; }
 .qr-item { background: #fff; border-radius: 12px; padding: 16px; text-align: center; }
 .qr-item canvas, .qr-item img { width: 120px !important; height: 120px !important; }
@@ -52,8 +45,6 @@ body { font-family: 'Nunito', system-ui, sans-serif; background: #0A1628; color:
 .qr-status { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-top: 4px; display: inline-block; }
 .qr-status.virgin { background: #EAF3DE; color: #27500A; }
 .qr-status.activated { background: rgba(42,191,163,.15); color: #0A7A65; }
-
-/* TABLAS */
 .table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid rgba(255,255,255,.08); }
 table { width: 100%; border-collapse: collapse; font-size: 13px; }
 th { background: rgba(255,255,255,.05); padding: 12px 16px; text-align: left; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .6px; color: rgba(255,255,255,.4); white-space: nowrap; }
@@ -63,22 +54,19 @@ tr:hover td { background: rgba(255,255,255,.02); }
 .badge-virgin { background: rgba(255,200,0,.1); color: #FFD700; border: 1px solid rgba(255,200,0,.2); }
 .badge-activated { background: rgba(42,191,163,.1); color: #2ABFA3; border: 1px solid rgba(42,191,163,.2); }
 .pet-avatar-sm { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(42,191,163,.3); }
-
 .filter-bar { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
-.filter-bar input { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 10px; padding: 8px 14px; font-size: 13px; color: #fff; font-family: inherit; min-width: 200px; }
+.filter-bar input, .filter-bar select { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 10px; padding: 8px 14px; font-size: 13px; color: #fff; font-family: inherit; min-width: 180px; }
 .filter-bar input::placeholder { color: rgba(255,255,255,.3); }
-.filter-bar input:focus { outline: none; border-color: #2ABFA3; }
+.filter-bar input:focus, .filter-bar select:focus { outline: none; border-color: #2ABFA3; }
 .count-badge { font-size: 12px; color: rgba(255,255,255,.4); font-weight: 700; }
-
 .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #2ABFA3; color: #fff; font-size: 14px; font-weight: 700; padding: 12px 24px; border-radius: 30px; opacity: 0; transition: opacity .3s; pointer-events: none; z-index: 999; }
 .toast.show { opacity: 1; }
-
 .loading-msg { text-align: center; padding: 40px; color: rgba(255,255,255,.3); font-size: 15px; }
-
-@media (max-width: 600px) {
-  .content { padding: 16px; }
-  .qr-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
-}
+.existing-controls { display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 16px; }
+.pagination { display: flex; gap: 8px; align-items: center; margin-top: 16px; flex-wrap: wrap; }
+.page-btn { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); color: #fff; border-radius: 8px; padding: 6px 14px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit; }
+.page-btn.active { background: #2ABFA3; border-color: #2ABFA3; }
+.page-btn:hover { background: rgba(255,255,255,.15); }
 </style>
 </head>
 <body>
@@ -98,11 +86,11 @@ tr:hover td { background: rgba(255,255,255,.02); }
 </div>
 
 <div class="nav">
-  <button class="nav-btn active" onclick="showPanel('resumen')">📊 Resumen</button>
-  <button class="nav-btn" onclick="showPanel('qr')">🏷 Generar QR</button>
-  <button class="nav-btn" onclick="showPanel('placas')">📋 Placas</button>
-  <button class="nav-btn" onclick="showPanel('mascotas')">🐾 Mascotas</button>
-  <button class="nav-btn" onclick="showPanel('pedidos')">🛒 Pedidos</button>
+  <button class="nav-btn active" onclick="showPanel('resumen', this)">📊 Resumen</button>
+  <button class="nav-btn" onclick="showPanel('qr', this)">🏷 Generar QR</button>
+  <button class="nav-btn" onclick="showPanel('placas', this)">📋 Placas</button>
+  <button class="nav-btn" onclick="showPanel('mascotas', this)">🐾 Mascotas</button>
+  <button class="nav-btn" onclick="showPanel('pedidos', this)">🛒 Pedidos</button>
 </div>
 
 <div class="content">
@@ -117,13 +105,16 @@ tr:hover td { background: rgba(255,255,255,.02); }
       <div class="stat-card"><div class="stat-num" id="statMascotas">—</div><div class="stat-label">Mascotas registradas</div></div>
       <div class="stat-card"><div class="stat-num" id="statPerdidas">—</div><div class="stat-label">Modo perdida activo</div></div>
     </div>
-    <div class="loading-msg" id="resumenLoading">Cargando estadísticas...</div>
+    <div class="loading-msg" id="resumenLoading" style="display:none;"></div>
   </div>
 
   <!-- GENERAR QR -->
   <div class="panel" id="panel-qr">
     <div class="panel-title">Generar QR</div>
-    <div class="panel-sub">Crea nuevas placas vírgenes y descarga los QR para imprimir</div>
+    <div class="panel-sub">Crea nuevas placas o genera QR de placas existentes</div>
+
+    <!-- NUEVAS PLACAS -->
+    <div class="section-label">➕ Crear placas nuevas</div>
     <div class="qr-controls">
       <div class="field">
         <label>Cantidad</label>
@@ -132,15 +123,45 @@ tr:hover td { background: rgba(255,255,255,.02); }
       <div class="field">
         <label>Tamaño QR</label>
         <select id="qrTamano">
-          <option value="120">Pequeño (120px)</option>
-          <option value="160" selected>Mediano (160px)</option>
-          <option value="200">Grande (200px)</option>
+          <option value="120">Pequeño</option>
+          <option value="160" selected>Mediano</option>
+          <option value="200">Grande</option>
         </select>
       </div>
-      <button class="btn-primary" onclick="generarQRs()">⚡ Generar placas</button>
-      <button class="btn-secondary" id="btnImprimir" onclick="imprimirQRs()" style="display:none;">🖨 Imprimir / PDF</button>
+      <button class="btn-primary" onclick="generarQRs()">⚡ Crear y mostrar QR</button>
+    </div>
+
+    <hr class="divider">
+
+    <!-- PLACAS EXISTENTES -->
+    <div class="section-label">📦 QR de placas existentes (vírgenes)</div>
+    <div class="existing-controls">
+      <div class="field">
+        <label>Cuántas mostrar</label>
+        <select id="existingCantidad">
+          <option value="10">10 placas</option>
+          <option value="20">20 placas</option>
+          <option value="50" selected>50 placas</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Tamaño QR</label>
+        <select id="existingTamano">
+          <option value="120">Pequeño</option>
+          <option value="160" selected>Mediano</option>
+          <option value="200">Grande</option>
+        </select>
+      </div>
+      <button class="btn-teal-outline" onclick="cargarQRExistentes()">📋 Cargar QR existentes</button>
+    </div>
+
+    <!-- GRID DE QR -->
+    <div id="qrActions" style="display:none; margin-bottom:14px;">
+      <button class="btn-secondary" onclick="imprimirQRs()">🖨 Imprimir / Guardar PDF</button>
+      <span style="font-size:12px; color:rgba(255,255,255,.4); margin-left:12px;" id="qrCount"></span>
     </div>
     <div class="qr-grid" id="qrGrid"></div>
+    <div class="pagination" id="qrPagination"></div>
   </div>
 
   <!-- PLACAS -->
@@ -149,7 +170,7 @@ tr:hover td { background: rgba(255,255,255,.02); }
     <div class="panel-sub">Todas las placas generadas</div>
     <div class="filter-bar">
       <input type="text" id="filterPlacas" placeholder="Buscar por código..." oninput="filtrarPlacas()">
-      <select id="filterStatusPlacas" onchange="filtrarPlacas()" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:8px 14px;font-size:13px;color:#fff;font-family:inherit;">
+      <select id="filterStatusPlacas" onchange="filtrarPlacas()">
         <option value="">Todas</option>
         <option value="virgin">Vírgenes</option>
         <option value="activated">Activadas</option>
@@ -205,20 +226,17 @@ const SUPABASE_URL = 'https://obmzvxaokgjvwvkhxlkp.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ibXp2eGFva2dqdnd2a2h4bGtwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzODczODEsImV4cCI6MjA5Mzk2MzM4MX0.VkhfFrJXXZwjl4EEYkjRtJwYSOkaPEQfQ8QNu8uUTbs';
 const API = 'https://pawid-api.onrender.com';
 const BASE_URL = 'https://pawid.auditag.sbs/p/?code=';
-
 const { createClient } = supabase;
 const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-let allPlacas = [];
-let allMascotas = [];
-let allPedidos = [];
+let allPlacas = [], allMascotas = [], allPedidos = [];
+let currentQRCodes = [];
 
-// ── NAVEGACIÓN ──────────────────────────────
-function showPanel(name) {
+function showPanel(name, btn) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('panel-' + name).classList.add('active');
-  event.target.classList.add('active');
+  btn.classList.add('active');
   if (name === 'resumen') loadResumen();
   if (name === 'placas') loadPlacas();
   if (name === 'mascotas') loadMascotas();
@@ -227,111 +245,109 @@ function showPanel(name) {
 
 // ── RESUMEN ──────────────────────────────────
 async function loadResumen() {
-  document.getElementById('resumenLoading').style.display = 'block';
   const { data: placas } = await sb.from('plates').select('status');
   const { data: mascotas } = await sb.from('pets').select('lost_mode');
-  const virgenes = placas ? placas.filter(p => p.status === 'virgin').length : 0;
-  const activadas = placas ? placas.filter(p => p.status === 'activated').length : 0;
-  const perdidas = mascotas ? mascotas.filter(m => m.lost_mode).length : 0;
-  document.getElementById('statVirgenes').textContent = virgenes;
-  document.getElementById('statActivadas').textContent = activadas;
+  document.getElementById('statVirgenes').textContent = placas ? placas.filter(p => p.status === 'virgin').length : 0;
+  document.getElementById('statActivadas').textContent = placas ? placas.filter(p => p.status === 'activated').length : 0;
   document.getElementById('statMascotas').textContent = mascotas ? mascotas.length : 0;
-  document.getElementById('statPerdidas').textContent = perdidas;
-  document.getElementById('resumenLoading').style.display = 'none';
+  document.getElementById('statPerdidas').textContent = mascotas ? mascotas.filter(m => m.lost_mode).length : 0;
 }
 
-// ── GENERAR QR ───────────────────────────────
+// ── GENERAR QR — NUEVAS ──────────────────────
 async function generarQRs() {
   const cantidad = parseInt(document.getElementById('qrCantidad').value) || 10;
   const tamano = parseInt(document.getElementById('qrTamano').value) || 160;
   if (cantidad < 1 || cantidad > 50) { showToast('⚠️ Entre 1 y 50 placas'); return; }
-
   showToast('⚡ Generando ' + cantidad + ' placas...');
-
   try {
     const res = await fetch(API + '/admin/plates/batch', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      method: 'POST', headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ quantity: cantidad })
     });
     const data = await res.json();
-    if (!data.codes) { showToast('❌ Error generando placas'); return; }
-
-    const grid = document.getElementById('qrGrid');
-    grid.innerHTML = '';
-
-    for (const code of data.codes) {
-      const item = document.createElement('div');
-      item.className = 'qr-item';
-      item.id = 'qr-' + code;
-      const qrDiv = document.createElement('div');
-      item.appendChild(qrDiv);
-      const label = document.createElement('div');
-      label.className = 'qr-code-label';
-      label.textContent = code;
-      item.appendChild(label);
-      const status = document.createElement('div');
-      status.className = 'qr-status virgin';
-      status.textContent = 'VIRGEN';
-      item.appendChild(status);
-      grid.appendChild(item);
-
-      new QRCode(qrDiv, {
-        text: BASE_URL + code,
-        width: tamano, height: tamano,
-        colorDark: '#0A1628', colorLight: '#ffffff',
-        correctLevel: QRCode.CorrectLevel.M
-      });
-    }
-
-    document.getElementById('btnImprimir').style.display = 'inline-block';
+    if (!data.codes) { showToast('❌ Error: ' + (data.error || 'intenta de nuevo')); return; }
+    currentQRCodes = data.codes;
+    renderQRGrid(data.codes, tamano, 'NUEVA');
     showToast('✅ ' + data.codes.length + ' placas generadas');
-  } catch(e) {
-    showToast('❌ Error: ' + e.message);
-  }
+  } catch(e) { showToast('❌ Error de conexión'); }
+}
+
+// ── GENERAR QR — EXISTENTES ──────────────────
+async function cargarQRExistentes() {
+  const cantidad = parseInt(document.getElementById('existingCantidad').value) || 50;
+  const tamano = parseInt(document.getElementById('existingTamano').value) || 160;
+  showToast('📋 Cargando placas vírgenes...');
+  const { data, error } = await sb.from('plates').select('code').eq('status', 'virgin').limit(cantidad);
+  if (error || !data) { showToast('❌ Error cargando placas'); return; }
+  if (!data.length) { showToast('⚠️ No hay placas vírgenes disponibles'); return; }
+  currentQRCodes = data.map(p => p.code);
+  renderQRGrid(currentQRCodes, tamano, 'VIRGEN');
+  showToast('✅ ' + data.length + ' placas cargadas');
+}
+
+function renderQRGrid(codes, tamano, statusLabel) {
+  const grid = document.getElementById('qrGrid');
+  grid.innerHTML = '';
+  document.getElementById('qrActions').style.display = 'flex';
+  document.getElementById('qrActions').style.alignItems = 'center';
+  document.getElementById('qrCount').textContent = codes.length + ' placas';
+
+  codes.forEach(code => {
+    const item = document.createElement('div');
+    item.className = 'qr-item';
+    item.id = 'qr-' + code;
+    const qrDiv = document.createElement('div');
+    item.appendChild(qrDiv);
+    const label = document.createElement('div');
+    label.className = 'qr-code-label';
+    label.textContent = code;
+    item.appendChild(label);
+    const status = document.createElement('div');
+    status.className = 'qr-status virgin';
+    status.textContent = statusLabel;
+    item.appendChild(status);
+    grid.appendChild(item);
+
+    new QRCode(qrDiv, {
+      text: BASE_URL + code,
+      width: tamano, height: tamano,
+      colorDark: '#0A1628', colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.M
+    });
+  });
 }
 
 function imprimirQRs() {
-  const grid = document.getElementById('qrGrid');
-  const items = grid.querySelectorAll('.qr-item');
-  if (!items.length) { showToast('⚠️ Genera placas primero'); return; }
-
+  const items = document.getElementById('qrGrid').querySelectorAll('.qr-item');
+  if (!items.length) { showToast('⚠️ No hay QR para imprimir'); return; }
   const win = window.open('', '_blank');
-  win.document.write(`
-    <html><head><title>PawID — QR Codes</title>
-    <style>
-      body { font-family: Arial, sans-serif; margin: 20px; }
-      h2 { color: #0A1628; margin-bottom: 20px; }
-      .grid { display: flex; flex-wrap: wrap; gap: 20px; }
-      .item { text-align: center; border: 1px solid #ddd; border-radius: 10px; padding: 12px; page-break-inside: avoid; }
-      .code { font-family: monospace; font-size: 13px; font-weight: bold; color: #0A1628; margin-top: 6px; }
-      .url { font-size: 9px; color: #666; word-break: break-all; margin-top: 3px; }
-      @media print { body { margin: 10px; } }
-    </style></head><body>
-    <h2>PawID — Placas QR</h2>
-    <div class="grid">
-  `);
+  let html = `<html><head><title>PawID QR</title><style>
+    body{font-family:Arial,sans-serif;margin:20px;}
+    h2{color:#0A1628;margin-bottom:20px;}
+    .grid{display:flex;flex-wrap:wrap;gap:16px;}
+    .item{text-align:center;border:1px solid #ddd;border-radius:10px;padding:12px;page-break-inside:avoid;}
+    .code{font-family:monospace;font-size:13px;font-weight:bold;color:#0A1628;margin-top:6px;}
+    .scan{font-size:9px;color:#666;margin-top:2px;}
+    @media print{body{margin:8px;}.grid{gap:10px;}}
+  </style></head><body>
+  <h2>PawID — Placas QR (${items.length})</h2><div class="grid">`;
 
   items.forEach(item => {
     const code = item.querySelector('.qr-code-label').textContent;
     const canvas = item.querySelector('canvas');
     const img = canvas ? canvas.toDataURL() : '';
-    win.document.write(`
-      <div class="item">
-        <img src="${img}" width="120" height="120">
-        <div class="code">${code}</div>
-        <div class="url">${BASE_URL + code}</div>
-      </div>
-    `);
+    html += `<div class="item"><img src="${img}" width="120" height="120"><div class="code">${code}</div><div class="scan">SCAN</div></div>`;
   });
 
-  win.document.write('</div></body></html>');
+  html += '</div></body></html>';
+  win.document.write(html);
   win.document.close();
-  win.print();
+  setTimeout(() => win.print(), 500);
 }
 
 // ── PLACAS ───────────────────────────────────
 async function loadPlacas() {
+  document.getElementById('placasBody').innerHTML = '<tr><td colspan="4" class="loading-msg">Cargando...</td></tr>';
   const { data } = await sb.from('plates').select('*, pets(name)').order('created_at', { ascending: false });
   allPlacas = data || [];
   document.getElementById('countPlacas').textContent = allPlacas.length + ' placas';
@@ -341,29 +357,25 @@ async function loadPlacas() {
 function filtrarPlacas() {
   const q = document.getElementById('filterPlacas').value.toLowerCase();
   const status = document.getElementById('filterStatusPlacas').value;
-  const filtered = allPlacas.filter(p =>
-    (!q || p.code.toLowerCase().includes(q)) &&
-    (!status || p.status === status)
-  );
+  const filtered = allPlacas.filter(p => (!q || p.code.toLowerCase().includes(q)) && (!status || p.status === status));
   document.getElementById('countPlacas').textContent = filtered.length + ' placas';
   renderPlacas(filtered);
 }
 
 function renderPlacas(data) {
   const body = document.getElementById('placasBody');
-  if (!data.length) { body.innerHTML = '<tr><td colspan="4" class="loading-msg">No hay placas</td></tr>'; return; }
-  body.innerHTML = data.map(p => `
-    <tr>
-      <td><code style="color:#2ABFA3;font-size:13px;font-weight:800;">${p.code}</code></td>
-      <td><span class="badge badge-${p.status}">${p.status === 'virgin' ? 'Virgen' : 'Activada'}</span></td>
-      <td>${p.pets ? p.pets.name : '—'}</td>
-      <td style="color:rgba(255,255,255,.4);font-size:12px;">${p.activated_at ? new Date(p.activated_at).toLocaleDateString('es-CO') : '—'}</td>
-    </tr>
-  `).join('');
+  if (!data.length) { body.innerHTML = '<tr><td colspan="4" class="loading-msg">Sin resultados</td></tr>'; return; }
+  body.innerHTML = data.map(p => `<tr>
+    <td><code style="color:#2ABFA3;font-size:13px;font-weight:800;">${p.code}</code></td>
+    <td><span class="badge badge-${p.status}">${p.status === 'virgin' ? 'Virgen' : 'Activada'}</span></td>
+    <td>${p.pets ? p.pets.name : '—'}</td>
+    <td style="color:rgba(255,255,255,.4);font-size:12px;">${p.activated_at ? new Date(p.activated_at).toLocaleDateString('es-CO') : '—'}</td>
+  </tr>`).join('');
 }
 
 // ── MASCOTAS ─────────────────────────────────
 async function loadMascotas() {
+  document.getElementById('mascotasBody').innerHTML = '<tr><td colspan="7" class="loading-msg">Cargando...</td></tr>';
   const { data } = await sb.from('pets').select('*').order('created_at', { ascending: false });
   allMascotas = data || [];
   document.getElementById('countMascotas').textContent = allMascotas.length + ' mascotas';
@@ -372,47 +384,37 @@ async function loadMascotas() {
 
 function filtrarMascotas() {
   const q = document.getElementById('filterMascotas').value.toLowerCase();
-  const filtered = allMascotas.filter(m =>
-    !q || (m.name||'').toLowerCase().includes(q) ||
-    (m.owner_name||'').toLowerCase().includes(q) ||
-    (m.owner_phone||'').includes(q)
-  );
+  const filtered = allMascotas.filter(m => !q || (m.name||'').toLowerCase().includes(q) || (m.owner_name||'').toLowerCase().includes(q) || (m.owner_phone||'').includes(q));
   document.getElementById('countMascotas').textContent = filtered.length + ' mascotas';
   renderMascotas(filtered);
 }
 
 function renderMascotas(data) {
   const body = document.getElementById('mascotasBody');
-  if (!data.length) { body.innerHTML = '<tr><td colspan="7" class="loading-msg">No hay mascotas</td></tr>'; return; }
-  body.innerHTML = data.map(m => `
-    <tr>
-      <td><img class="pet-avatar-sm" src="${m.photo_url || 'https://placedog.net/40/40?id=1'}" alt="${m.name}"></td>
-      <td style="font-weight:800;">${m.name || '—'}</td>
-      <td style="color:rgba(255,255,255,.5);">${m.species || '—'}</td>
-      <td>${m.owner_name || '—'}</td>
-      <td>
-        ${m.owner_phone ? `<a href="https://wa.me/57${m.owner_phone}" target="_blank" style="color:#2ABFA3;text-decoration:none;">📱 ${m.owner_phone}</a>` : '—'}
-      </td>
-      <td>${m.lost_mode ? '<span class="badge" style="background:rgba(239,68,68,.15);color:#EF4444;border:1px solid rgba(239,68,68,.2);">🚨 ACTIVO</span>' : '<span style="color:rgba(255,255,255,.3);font-size:12px;">—</span>'}</td>
-      <td style="color:rgba(255,255,255,.4);font-size:12px;">${new Date(m.created_at).toLocaleDateString('es-CO')}</td>
-    </tr>
-  `).join('');
+  if (!data.length) { body.innerHTML = '<tr><td colspan="7" class="loading-msg">Sin resultados</td></tr>'; return; }
+  body.innerHTML = data.map(m => `<tr>
+    <td><img class="pet-avatar-sm" src="${m.photo_url || 'https://placedog.net/40/40?id=1'}" alt="${m.name||''}"></td>
+    <td style="font-weight:800;">${m.name || '—'}</td>
+    <td style="color:rgba(255,255,255,.5);">${m.species || '—'}</td>
+    <td>${m.owner_name || '—'}</td>
+    <td>${m.owner_phone ? '<a href="https://wa.me/57' + m.owner_phone + '" target="_blank" style="color:#2ABFA3;text-decoration:none;">📱 ' + m.owner_phone + '</a>' : '—'}</td>
+    <td>${m.lost_mode ? '<span class="badge" style="background:rgba(239,68,68,.15);color:#EF4444;border:1px solid rgba(239,68,68,.2);">🚨 ACTIVO</span>' : '<span style="color:rgba(255,255,255,.3);font-size:12px;">—</span>'}</td>
+    <td style="color:rgba(255,255,255,.4);font-size:12px;">${new Date(m.created_at).toLocaleDateString('es-CO')}</td>
+  </tr>`).join('');
 }
 
 // ── PEDIDOS ──────────────────────────────────
 async function loadPedidos() {
+  document.getElementById('pedidosBody').innerHTML = '<tr><td colspan="6" class="loading-msg">Cargando...</td></tr>';
   try {
     const SHEET_ID = '11nTZ8f9UlWVd_QGYVhX07AvX1P5jPfTmPY8KWwnLzbg';
-    const res = await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`);
+    const res = await fetch('https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?tqx=out:json');
     const text = await res.text();
     const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*?)\);/)[1]);
     const rows = json.table.rows || [];
     allPedidos = rows.map(r => ({
-      fecha: r.c[0]?.v || '—',
-      nombre: r.c[1]?.v || '—',
-      telefono: r.c[2]?.v || '—',
-      ciudad: r.c[3]?.v || '—',
-      direccion: r.c[4]?.v || '—'
+      fecha: r.c[0]?.v || '—', nombre: r.c[1]?.v || '—',
+      telefono: r.c[2]?.v || '—', ciudad: r.c[3]?.v || '—', direccion: r.c[4]?.v || '—'
     })).reverse();
     document.getElementById('countPedidos').textContent = allPedidos.length + ' pedidos';
     renderPedidos(allPedidos);
@@ -423,32 +425,22 @@ async function loadPedidos() {
 
 function filtrarPedidos() {
   const q = document.getElementById('filterPedidos').value.toLowerCase();
-  const filtered = allPedidos.filter(p =>
-    !q || (p.nombre||'').toLowerCase().includes(q) ||
-    (p.ciudad||'').toLowerCase().includes(q) ||
-    (p.telefono||'').includes(q)
-  );
+  const filtered = allPedidos.filter(p => !q || (p.nombre||'').toLowerCase().includes(q) || (p.ciudad||'').toLowerCase().includes(q) || (p.telefono||'').includes(q));
   document.getElementById('countPedidos').textContent = filtered.length + ' pedidos';
   renderPedidos(filtered);
 }
 
 function renderPedidos(data) {
   const body = document.getElementById('pedidosBody');
-  if (!data.length) { body.innerHTML = '<tr><td colspan="6" class="loading-msg">No hay pedidos</td></tr>'; return; }
-  body.innerHTML = data.map(p => `
-    <tr>
-      <td style="color:rgba(255,255,255,.4);font-size:12px;">${p.fecha}</td>
-      <td style="font-weight:800;">${p.nombre}</td>
-      <td>
-        ${p.telefono && p.telefono !== '—' ? `<a href="https://wa.me/57${p.telefono}" target="_blank" style="color:#2ABFA3;text-decoration:none;">📱 ${p.telefono}</a>` : '—'}
-      </td>
-      <td style="color:rgba(255,255,255,.5);">${p.ciudad}</td>
-      <td style="color:rgba(255,255,255,.5);font-size:12px;">${p.direccion}</td>
-      <td>
-        <a href="https://wa.me/57${p.telefono}?text=Hola%20${encodeURIComponent(p.nombre)},%20soy%20PawID.%20Tu%20pedido%20est%C3%A1%20listo.%20%C2%BFCu%C3%A1ndo%20te%20podemos%20hacer%20entrega?" target="_blank" style="background:#25D366;color:#fff;text-decoration:none;border-radius:8px;padding:5px 12px;font-size:12px;font-weight:700;">WhatsApp</a>
-      </td>
-    </tr>
-  `).join('');
+  if (!data.length) { body.innerHTML = '<tr><td colspan="6" class="loading-msg">Sin resultados</td></tr>'; return; }
+  body.innerHTML = data.map(p => `<tr>
+    <td style="color:rgba(255,255,255,.4);font-size:12px;">${p.fecha}</td>
+    <td style="font-weight:800;">${p.nombre}</td>
+    <td>${p.telefono && p.telefono !== '—' ? '<a href="https://wa.me/57' + p.telefono + '" target="_blank" style="color:#2ABFA3;text-decoration:none;">📱 ' + p.telefono + '</a>' : '—'}</td>
+    <td style="color:rgba(255,255,255,.5);">${p.ciudad}</td>
+    <td style="color:rgba(255,255,255,.5);font-size:12px;">${p.direccion}</td>
+    <td><a href="https://wa.me/57${p.telefono}?text=Hola%20${encodeURIComponent(p.nombre)},%20soy%20PawID.%20Tu%20pedido%20est%C3%A1%20listo%20%F0%9F%90%BE%20%C2%BFCu%C3%A1ndo%20te%20podemos%20hacer%20entrega?" target="_blank" style="background:#25D366;color:#fff;text-decoration:none;border-radius:8px;padding:5px 12px;font-size:12px;font-weight:700;">WhatsApp</a></td>
+  </tr>`).join('');
 }
 
 function showToast(msg) {
@@ -458,7 +450,6 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 3000);
 }
 
-// Cargar resumen al inicio
 loadResumen();
 </script>
 </body>
