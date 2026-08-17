@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PawID — Panel Admin</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap');
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -308,11 +308,8 @@ function renderQRGrid(codes, tamano, statusLabel) {
     item.appendChild(status);
     grid.appendChild(item);
 
-    new QRCode(qrDiv, {
-      text: BASE_URL + code,
-      width: tamano, height: tamano,
-      colorDark: '#0A1628', colorLight: '#ffffff',
-      correctLevel: QRCode.CorrectLevel.M
+        QRCode.toCanvas(BASE_URL + code, { width: tamano, color: { dark: '#0A1628', light: '#ffffff' } }, function(err, canvas) {
+      if (!err && canvas) qrDiv.appendChild(canvas);
     });
   });
 }
